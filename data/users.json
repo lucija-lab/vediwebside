@@ -1,0 +1,38 @@
+[
+  {
+    "id": "d61bb848f06ece73d768493b5b44de9d",
+    "firstName": "Lucija",
+    "lastName": "Verdi",
+    "email": "lucija@verdihrvatska.com",
+    "phone": "",
+    "address": "Zagreb",
+    "city": "Zagreb",
+    "passwordHash": "53326c36853c417cc7561f102acfbe2e:b0ac1ac3d4124716ef30918e4f6c43b0221b565b7a87bde82420ebb4257f231e1e78dff982f422d2ffdd34c62e96f85fc5e0daeb8f7164d13272ac023d7be99c",
+    "createdAt": "2026-04-24T10:23:11.768Z",
+    "role": "admin"
+  },
+  {
+    "id": "2cca003de40465204b1847de90f4a41c",
+    "firstName": "aria",
+    "lastName": "oiae,f",
+    "email": "aria@gmail.com",
+    "phone": "06665644",
+    "address": "ulica",
+    "city": "zagreb",
+    "passwordHash": "8caa05928a371815bdaec59237ae57ce:781043df5e756bf62565f8645c27fe8f4a419b0113d16f9d487e4ff281aa76a3da3febae124e25789b8cb95427f4734fef33ab4fc34c42c912a155143fd18b29",
+    "createdAt": "2026-04-24T11:01:23.287Z",
+    "role": "client"
+  },
+  {
+    "id": "f3a9b2c1d4e5f6a7b8c9d0e1f2a3b4c5",
+    "firstName": "Marijo",
+    "lastName": "Valetić",
+    "email": "marijo.valetic@gmail.com",
+    "phone": "+385 92 504 44 54",
+    "address": "Zagreb",
+    "city": "Zagreb",
+    "passwordHash": "73a9e69d2d5e78200295d077b52ca658:0961950fa8e4d0a9b787129e1ae815ef74e6a9d9f95331ee1e73571dd033a996898fc7f73e206dbade7cdab63b2d37deaca01dc38836dddafa30351ab6fef881",
+    "createdAt": "2026-04-28T12:00:00.000Z",
+    "role": "livreur"
+  }
+]

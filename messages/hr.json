@@ -1,0 +1,181 @@
+{
+  "nav": {
+    "home": "Početna",
+    "shop": "Košarice",
+    "about": "O nama",
+    "seasons": "Sezonalnost",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "badge": "Svježe. Lokalno. Sezonski.",
+    "title": "Zdrave namirnice direktno na Vaša vrata",
+    "subtitle": "Verdi dostavlja košarice pune svježeg povrća od OPG-ova iz Vaše blizine — svaka 2 tjedna, cijele godine.",
+    "cta": "Odaberite košaricu",
+    "cta2": "Saznajte više"
+  },
+  "why": {
+    "title": "Zašto VERDI?",
+    "items": [
+      {
+        "icon": "🌱",
+        "title": "Domaće i svježe",
+        "desc": "Namirnice naših OPG-ova, svježe ubrane za dostavu"
+      },
+      {
+        "icon": "🤝",
+        "title": "Podržite lokalno",
+        "desc": "Izravno pomažete malim proizvođačima i lokalnoj ekonomiji"
+      },
+      {
+        "icon": "🥦",
+        "title": "14+ vrsta povrća",
+        "desc": "Prosječno 14+ različitih vrsta za svako godišnje doba"
+      },
+      {
+        "icon": "📅",
+        "title": "Cijele godine",
+        "desc": "Dostave svaka 2 tjedna, 12 mjeseci, sa sezonskim rotacijama"
+      }
+    ]
+  },
+  "products": {
+    "title": "Naše košarice",
+    "subtitle": "Odaberite košaricu koja odgovara Vašim potrebama",
+    "taman": {
+      "name": "Taman Košara",
+      "price": "59",
+      "period": "/ mjes.",
+      "tag": "Najpopularnije",
+      "features": [
+        "Min. 7 kg povrća",
+        "6+ različitih kultura",
+        "Dostava 2x mjesečno",
+        "Svježe ubrano za dostavu",
+        "Iz provjerenih OPG-ova",
+        "Dostava na kućnu ili poslovnu adresu"
+      ],
+      "cta": "Pretplatite se"
+    },
+    "super": {
+      "name": "Super Košara",
+      "price": "71",
+      "period": "/ mjes.",
+      "tag": "Premium",
+      "features": [
+        "Min. 10.5 kg povrća",
+        "7+ različitih kultura",
+        "Dostava 2x mjesečno",
+        "Svježe ubrano za dostavu",
+        "Iz provjerenih OPG-ova",
+        "Fleksibilno mjesto i vrijeme dostave"
+      ],
+      "cta": "Pretplatite se"
+    },
+    "vat": "Cijene uključuju PDV",
+    "delivery": "Dostava svaka 2 tjedna"
+  },
+  "seasons": {
+    "title": "Sezonski kalendar",
+    "subtitle": "Svaka košarica sadrži ono što je najsvježije i najukusnije u trenutnoj sezoni",
+    "spring": {
+      "name": "Proljeće",
+      "months": "Ožujak — Svibanj",
+      "items": ["Mladi luk", "Mladi češnjak", "Mladi poriluk", "Mlada mrkva", "Mlada brokula", "Mladi kelj", "Mlade mahune", "Mladi špinat", "Mlade tikvice", "Mlada cikla", "Peršin list", "Mladi celer", "Cherry rajčica", "Salata", "Matovilac", "Rikula", "Radič", "Rotkvice", "Krastavci"]
+    },
+    "summer": {
+      "name": "Ljeto",
+      "months": "Lipanj — Kolovoz",
+      "items": ["Rajčica", "Paprika", "Babura", "Patlidžan", "Krastavci", "Tikvice", "Mladi grah", "Mladi luk", "Cikla", "Blitva", "Salata", "Mlada brokula", "Mlada mrkva", "Bobičasto voće", "Lubenice", "Dinje", "Peršin", "Celer", "Tikva", "Kupus", "Korabica", "Kukuruz šećerac"]
+    },
+    "autumn": {
+      "name": "Jesen",
+      "months": "Rujan — Listopad",
+      "items": ["Rajčica", "Paprika", "Patlidžan", "Tikvice", "Korabica", "Kelj", "Kelj pupčar", "Crni kelj", "Brokula", "Cikla", "Butternut tikva", "Hokkaido tikva", "Krumpir", "Batat", "Peršin list", "Blitva", "Mladi poriluk", "Špinat", "Rikula", "Mahune", "Kupus"]
+    },
+    "winter": {
+      "name": "Zima",
+      "months": "Studeni — Veljača",
+      "items": ["Kelj", "Kelj pupčar", "Rastika", "Kovrdžavi kelj", "Korabica", "Cikla", "Korijen peršina", "Korijen celera", "Pastrnjak", "Batat", "Mlada brokula", "Cvjetača", "Kupus", "Špinat", "Crveni luk", "Matovilac", "Blitva", "Rikula", "Mrkva", "Poriluk", "Bijeli luk"]
+    }
+  },
+  "about": {
+    "title": "O nama",
+    "subtitle": "Verdi je nastao iz jednostavne ideje: spojiti ljude s kvalitetnom, lokalnom hranom",
+    "story": "Mi u Verdiju razumijemo da uz posao i sve obaveze, jednostavno ne stižete u kupovinu, a kamo li na tržnicu. Zato mi dolazimo k Vama! Verdi Vam dostavlja košarice pune zdravog povrća, direktno od OPG-ova iz Vaše blizine — svaka 2 tjedna, cijele godine!",
+    "mission": "Naša misija",
+    "missionText": "Želimo da Vam jedina briga bude... što ćete kuhati sa svim prekrasnim, svježim, raznolikim namirnicama koje Vam stignu na vrata. Ostalo prepustite nama!",
+    "partners": "Naši OPG partneri",
+    "partnersSubtitle": "Surađujemo s 6 provjerenih obiteljskih poljoprivrednih gospodarstava iz okolice Zagreba"
+  },
+  "farms": {
+    "betic": {
+      "name": "OPG Tomislav Betić",
+      "location": "Drenje Sitarjevsko, Zagreb",
+      "desc": "Obiteljski posao s tradicijom dugom 31 godinu. Tim od troje članova obrađuje 6 ha i proizvodi više od 20 kultura povrća godišnje."
+    },
+    "cabrajec": {
+      "name": "OPG Krešimir Čabrajec",
+      "location": "Utrine, Zagreb",
+      "desc": "Na tržnici Utrine od samog otvorenja. Svježe ubrano i nespricirano povrće, 4 generacije na OPG-u."
+    },
+    "lackovic": {
+      "name": "OPG Lacković",
+      "location": "Žitkan, Dubrava",
+      "desc": "Mladi agronom Luka Lacković vodi 30 ha gospodarstvo osnovano 2009. Plastenički i vanjski uzgoj povrća."
+    },
+    "milicevic": {
+      "name": "OPG Miličević",
+      "location": "Sesvete, Zagreb",
+      "desc": "8 ha s fokusom na održivost i kvalitetu. Uz povrće, proizvode hladno prešane sokove iz vlastitih voćnjaka."
+    },
+    "novak": {
+      "name": "OPG Novak",
+      "location": "Mirošević, Zagreb",
+      "desc": "Najveće zagrebačko ekološko povrtlarsko gospodarstvo. Godišnje 50+ tona ekološki certificiranog povrća."
+    },
+    "draganicki": {
+      "name": "OPG Draganički Plastenici",
+      "location": "Draganići, Karlovac",
+      "desc": "Obitelj Troha, više od 100 godina u poljoprivredi. Plastenički i vanjski uzgoj, vlastite presadnice."
+    }
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Imate pitanja? Javite nam se!",
+    "phone": "Telefon",
+    "email": "E-mail",
+    "address": "Adresa",
+    "addressValue": "Susedgradska ulica 3, 10000 Zagreb",
+    "formName": "Ime i prezime",
+    "formEmail": "E-mail adresa",
+    "formMessage": "Poruka",
+    "formSend": "Pošaljite poruku",
+    "formSuccess": "Poruka je poslana! Javit ćemo Vam se uskoro."
+  },
+  "footer": {
+    "tagline": "Svježe povrće od lokalnih OPG-ova, direktno na Vaša vrata.",
+    "links": "Brze veze",
+    "legal": "Pravni dokumenti",
+    "terms": "Uvjeti poslovanja",
+    "privacy": "Politika privatnosti",
+    "gdpr": "GDPR",
+    "rights": "Sva prava pridržana.",
+    "company": "LMB 1759 Export d.o.o. · OIB: 23568488873 · Susedgradska 3, 10000 Zagreb"
+  },
+  "legal": {
+    "terms": {
+      "title": "Uvjeti poslovanja",
+      "content": "Uvjeti web poslovanja Verdi, LMB 1759 Export d.o.o."
+    },
+    "privacy": {
+      "title": "Politika privatnosti"
+    }
+  },
+  "checkout": {
+    "success_title": "Hvala na pretplati!",
+    "success_text": "Vaša pretplata je aktivna. Kontaktirat ćemo Vas s detaljima prve dostave.",
+    "cancel_title": "Plaćanje otkazano",
+    "cancel_text": "Vaša pretplata nije aktivirana. Možete pokušati ponovno.",
+    "back": "Povratak na košarice"
+  }
+}

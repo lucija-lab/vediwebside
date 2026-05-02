@@ -1,0 +1,181 @@
+{
+  "nav": {
+    "home": "Home",
+    "shop": "Baskets",
+    "about": "About us",
+    "seasons": "Seasons",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Fresh. Local. Seasonal.",
+    "title": "Healthy produce delivered straight to your door",
+    "subtitle": "Verdi delivers baskets full of fresh vegetables from local family farms near you — every 2 weeks, all year round.",
+    "cta": "Choose your basket",
+    "cta2": "Learn more"
+  },
+  "why": {
+    "title": "Why VERDI?",
+    "items": [
+      {
+        "icon": "🌱",
+        "title": "Local & Fresh",
+        "desc": "Produce from our partner farms, freshly harvested for delivery"
+      },
+      {
+        "icon": "🤝",
+        "title": "Support local",
+        "desc": "You directly support small producers and the local economy"
+      },
+      {
+        "icon": "🥦",
+        "title": "14+ varieties",
+        "desc": "On average 14+ different types of vegetables for every season"
+      },
+      {
+        "icon": "📅",
+        "title": "All year round",
+        "desc": "Deliveries every 2 weeks, 12 months, with seasonal rotations"
+      }
+    ]
+  },
+  "products": {
+    "title": "Our baskets",
+    "subtitle": "Choose the basket that suits your needs",
+    "taman": {
+      "name": "Taman Basket",
+      "price": "59",
+      "period": "/ mo.",
+      "tag": "Most popular",
+      "features": [
+        "Min. 7 kg of vegetables",
+        "6+ different crops",
+        "Delivery 2x per month",
+        "Freshly harvested for delivery",
+        "From verified family farms",
+        "Delivery to home or office"
+      ],
+      "cta": "Subscribe"
+    },
+    "super": {
+      "name": "Super Basket",
+      "price": "71",
+      "period": "/ mo.",
+      "tag": "Premium",
+      "features": [
+        "Min. 10.5 kg of vegetables",
+        "7+ different crops",
+        "Delivery 2x per month",
+        "Freshly harvested for delivery",
+        "From verified family farms",
+        "Flexible delivery location & time"
+      ],
+      "cta": "Subscribe"
+    },
+    "vat": "Prices include VAT",
+    "delivery": "Delivery every 2 weeks"
+  },
+  "seasons": {
+    "title": "Seasonal calendar",
+    "subtitle": "Each basket contains what is freshest and most delicious in the current season",
+    "spring": {
+      "name": "Spring",
+      "months": "March — May",
+      "items": ["Young onion", "Young garlic", "Young leek", "Young carrots", "Young broccoli", "Young kale", "Young beans", "Young spinach", "Young zucchini", "Young beetroot", "Parsley leaves", "Young celery", "Cherry tomato", "Lettuce", "Corn salad", "Arugula", "Radicchio", "Radishes", "Cucumbers"]
+    },
+    "summer": {
+      "name": "Summer",
+      "months": "June — August",
+      "items": ["Tomato", "Pepper", "Bell pepper", "Eggplant", "Cucumbers", "Zucchini", "Young beans", "Young onion", "Beetroot", "Swiss chard", "Lettuce", "Young broccoli", "Young carrots", "Berries", "Watermelon", "Melon", "Parsley", "Celery", "Squash", "Cabbage", "Kohlrabi", "Sweet corn"]
+    },
+    "autumn": {
+      "name": "Autumn",
+      "months": "September — October",
+      "items": ["Tomato", "Pepper", "Eggplant", "Zucchini", "Kohlrabi", "Kale", "Brussels sprouts", "Black kale", "Broccoli", "Beetroot", "Butternut squash", "Hokkaido squash", "Potatoes", "Sweet potato", "Parsley", "Swiss chard", "Young leek", "Spinach", "Arugula", "Beans", "Cabbage"]
+    },
+    "winter": {
+      "name": "Winter",
+      "months": "November — February",
+      "items": ["Kale", "Brussels sprouts", "Rastika", "Curly kale", "Kohlrabi", "Beetroot", "Root parsley", "Root celery", "Parsnip", "Sweet potato", "Young broccoli", "Cauliflower", "Cabbage", "Spinach", "Red onion", "Corn salad", "Swiss chard", "Arugula", "Carrots", "Leek", "Garlic"]
+    }
+  },
+  "about": {
+    "title": "About us",
+    "subtitle": "Verdi was born from a simple idea: connecting people with quality, local food",
+    "story": "We at Verdi understand that with work and all your obligations, you simply don't have time to go shopping, let alone to the farmers' market. That's why we come to you! Verdi delivers baskets full of healthy vegetables, directly from family farms near you — every 2 weeks, all year round!",
+    "mission": "Our mission",
+    "missionText": "We want your only worry to be... what to cook with all the wonderful, fresh, diverse ingredients that arrive at your door. Leave the rest to us!",
+    "partners": "Our farm partners",
+    "partnersSubtitle": "We work with 6 trusted family farms from the Zagreb area"
+  },
+  "farms": {
+    "betic": {
+      "name": "OPG Tomislav Betić",
+      "location": "Drenje Sitarjevsko, Zagreb",
+      "desc": "A family business with 31 years of tradition. A team of three members cultivates 6 ha and produces over 20 crops per year."
+    },
+    "cabrajec": {
+      "name": "OPG Krešimir Čabrajec",
+      "location": "Utrine, Zagreb",
+      "desc": "At Utrine market since its opening. Freshly harvested, unsprayed vegetables — 4 generations on the farm."
+    },
+    "lackovic": {
+      "name": "OPG Lacković",
+      "location": "Žitkan, Dubrava",
+      "desc": "Young agronomist Luka Lacković runs a 30 ha farm founded in 2009. Greenhouse and outdoor vegetable growing."
+    },
+    "milicevic": {
+      "name": "OPG Miličević",
+      "location": "Sesvete, Zagreb",
+      "desc": "8 ha with a focus on sustainability and quality. Alongside vegetables, they produce cold-pressed juices from their own orchards."
+    },
+    "novak": {
+      "name": "OPG Novak",
+      "location": "Mirošević, Zagreb",
+      "desc": "Zagreb's largest organic vegetable farm. Over 50 tons of certified organic vegetables per year."
+    },
+    "draganicki": {
+      "name": "OPG Draganički Plastenici",
+      "location": "Draganići, Karlovac",
+      "desc": "The Troha family, over 100 years in farming. Greenhouse and outdoor growing, own seedlings."
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Have questions? Get in touch!",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "addressValue": "Susedgradska ulica 3, 10000 Zagreb",
+    "formName": "Full name",
+    "formEmail": "Email address",
+    "formMessage": "Message",
+    "formSend": "Send message",
+    "formSuccess": "Message sent! We'll get back to you soon."
+  },
+  "footer": {
+    "tagline": "Fresh vegetables from local farms, delivered to your door.",
+    "links": "Quick links",
+    "legal": "Legal",
+    "terms": "Terms & Conditions",
+    "privacy": "Privacy Policy",
+    "gdpr": "GDPR",
+    "rights": "All rights reserved.",
+    "company": "LMB 1759 Export d.o.o. · OIB: 23568488873 · Susedgradska 3, 10000 Zagreb"
+  },
+  "legal": {
+    "terms": {
+      "title": "Terms & Conditions",
+      "content": "Verdi online store terms and conditions, LMB 1759 Export d.o.o."
+    },
+    "privacy": {
+      "title": "Privacy Policy"
+    }
+  },
+  "checkout": {
+    "success_title": "Thank you for subscribing!",
+    "success_text": "Your subscription is active. We will contact you with details for your first delivery.",
+    "cancel_title": "Payment cancelled",
+    "cancel_text": "Your subscription was not activated. You can try again.",
+    "back": "Back to baskets"
+  }
+}

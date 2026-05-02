@@ -1,0 +1,26 @@
+[
+  {
+    "userId": "2cca003de40465204b1847de90f4a41c",
+    "plan": "taman",
+    "address": "ulica",
+    "city": "zagreb",
+    "scheduledDate": "2026-05-08",
+    "timeSlot": "09:00–13:00",
+    "status": "skipped",
+    "notes": "",
+    "id": "0bfbc151726140e39d12be6a",
+    "createdAt": "2026-04-24T11:35:06.030Z"
+  },
+  {
+    "userId": "2cca003de40465204b1847de90f4a41c",
+    "plan": "taman",
+    "address": "ulica",
+    "city": "zagreb",
+    "scheduledDate": "2026-05-22",
+    "timeSlot": "09:00–13:00",
+    "status": "delivered",
+    "notes": "",
+    "id": "1cca003de40465204b1847de90f4b52d",
+    "createdAt": "2026-04-24T12:00:00.000Z"
+  }
+]
