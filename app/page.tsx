@@ -16,13 +16,13 @@ const content = {
       { icon: "🌱", title: "Domaće i svježe", text: "Povrće se bere neposredno prije dostave, direktno od provjerenih OPG-ova iz vaše blizine." },
       { icon: "🗓️", title: "Cijele godine", text: "Dostava svaka 2 tjedna, 12 mjeseci godišnje – sa sezonskim rotacijama namirnica." },
       { icon: "🥕", title: "Raznolikost", text: "Prosječno 14+ različitih vrsta povrća i voća po košarici, svaka sadrži 6+ kultura." },
-      { icon: "🤝", title: "Podržite lokalne", text: "S Verdi suradnjom izravno pomažete malim obiteljskim proizvođačima i lokalnoj ekonomiji." },
+      { icon: "🤝", title: "Podržite naše", text: "S Verdi suradnjom izravno pomažete malim obiteljskim proizvođačima i lokalnoj ekonomiji." },
     ],
     basketsTitle: "Naše košarice",
     basketsSub: "Tri košarice, ista kvaliteta – odaberite ono što vam odgovara.",
-    taman: { name: 'Košara "Taman"', price: "62€/mj.", weight: "min. 7 kg", cultures: "6+ kultura", desc: "Svježe sezonsko povrće za 1–2 osobe. Dostavlja se svaka 2 tjedna, kamo i kada želite.", cta: "Naruči Taman" },
-    eko: { name: 'Košara "Eko"', price: "66,50€/mj.", weight: "~8 kg", cultures: "Eko certificirano", desc: "Ekološki certificirano povrće iz provjerenih eko OPG-ova. Čisto, prirodno, direktno s polja.", cta: "Naruči Eko" },
-    super: { name: 'Košara "Super"', price: "71€/mj.", weight: "min. 10,5 kg", cultures: "7+ kultura", desc: "Bogatija košarica za veće kućanstvo ili prave ljubitelje svježeg povrća.", cta: "Naruči Super" },
+    taman: { name: 'Košara "Taman"', price: "62€/mj. (uklj. PDV)", weight: "min. 7 kg", cultures: "6+ kultura", desc: "Svježe sezonsko povrće za 1–2 osobe. Dostavlja se svaka 2 tjedna, kamo i kada želite.", cta: "Naruči Taman" },
+    eko: { name: 'Košara "Eko"', price: "66,50€/mj. (uklj. PDV)", weight: "~8 kg", cultures: "Eko certificirano", desc: "Ekološki certificirano povrće iz provjerenih eko OPG-ova. Čisto, prirodno, direktno s polja.", cta: "Naruči Eko" },
+    super: { name: 'Košara "Super"', price: "71€/mj. (uklj. PDV)", weight: "min. 10,5 kg", cultures: "7+ kultura", desc: "Bogatija košarica za veće kućanstvo ili prave ljubitelje svježeg povrća.", cta: "Naruči Super" },
     farmsTitle: "Naši OPG partneri",
     farmsSub: "Surađujemo s obiteljskim farmama iz Zagreba i okolice. Ljudi koji s ljubavlju uzgajaju ono što jedete.",
     farms: [
@@ -36,9 +36,9 @@ const content = {
     reviewsTitle: "Što kažu naši kupci",
     reviews: [
       { name: "Maja K.", city: "Zagreb", text: "Nevjerojatno svježe! Od kad naručujem Verdi, prestala sam ići na tržnicu. Povrće je uvijek savršeno i raznovrsno.", stars: 5 },
-      { name: "Ivan P.", city: "Zagreb", text: "Super košarica je idealna za nas četvero. Djeca su oduševljena svježim povrćem, a mi štedimo i podupiremo lokalne.", stars: 5 },
-      { name: "Ana M.", city: "Zagreb", text: "Kvaliteta je neusporediva s trgovinom. Svaka dostava je iznenađenje – uvijek nešto novo i sezonsko.", stars: 5 },
-      { name: "Tomislav R.", city: "Zagreb", text: "Odlično rješenje za užurban ritam života. Zdravo, lokalno, svježe – i dostavljeno na vrata ureda!", stars: 5 },
+      { name: "Ivan P.", city: "Zaprešić", text: "Super košarica je idealna za nas četvero. Djeca su oduševljena svježim povrćem, a mi štedimo i podupiremo lokalne.", stars: 5 },
+      { name: "Ana M.", city: "Samobor", text: "Kvaliteta je neusporediva s trgovinom. Svaka dostava je iznenađenje – uvijek nešto novo i sezonsko.", stars: 5 },
+      { name: "Tomislav R.", city: "Velika Gorica", text: "Odlično rješenje za užurban ritam života. Zdravo, lokalno, svježe – i dostavljeno na vrata ureda!", stars: 5 },
     ],
     ctaTitle: "Spremi se na okus prave svježe hrane",
     ctaSub: "Pridruži se stotinama zadovoljnih kupaca koji svaka 2 tjedna dobivaju košaricu svježeg povrća.",
@@ -57,9 +57,9 @@ const content = {
     ],
     basketsTitle: "Our baskets",
     basketsSub: "Three baskets, same quality – choose what suits you best.",
-    taman: { name: "\"Taman\" Basket", price: "€62/mo.", weight: "min. 7 kg", cultures: "6+ varieties", desc: "Fresh seasonal vegetables for 1–2 people. Delivered every 2 weeks, wherever and whenever you want.", cta: "Order Taman" },
-    eko: { name: "\"Eko\" Basket", price: "€66.50/mo.", weight: "~8 kg", cultures: "Eco certified", desc: "Certified organic produce from verified eco farms. Clean, natural, straight from the field.", cta: "Order Eko" },
-    super: { name: "\"Super\" Basket", price: "€71/mo.", weight: "min. 10.5 kg", cultures: "7+ varieties", desc: "A fuller basket for larger households or true fresh produce lovers.", cta: "Order Super" },
+    taman: { name: "\"Taman\" Basket", price: "€62/mo. (incl. VAT)", weight: "min. 7 kg", cultures: "6+ varieties", desc: "Fresh seasonal vegetables for 1–2 people. Delivered every 2 weeks, wherever and whenever you want.", cta: "Order Taman" },
+    eko: { name: "\"Eko\" Basket", price: "€66.50/mo. (incl. VAT)", weight: "~8 kg", cultures: "Eco certified", desc: "Certified organic produce from verified eco farms. Clean, natural, straight from the field.", cta: "Order Eko" },
+    super: { name: "\"Super\" Basket", price: "€71/mo. (incl. VAT)", weight: "min. 10.5 kg", cultures: "7+ varieties", desc: "A fuller basket for larger households or true fresh produce lovers.", cta: "Order Super" },
     farmsTitle: "Our farm partners",
     farmsSub: "We work with family farms from Zagreb and the surrounding area. People who grow what you eat with love.",
     farms: [
@@ -73,9 +73,9 @@ const content = {
     reviewsTitle: "What our customers say",
     reviews: [
       { name: "Maja K.", city: "Zagreb", text: "Incredibly fresh! Since I started ordering from Verdi, I stopped going to the market. Always perfect and varied.", stars: 5 },
-      { name: "Ivan P.", city: "Zagreb", text: "The Super basket is ideal for our family of four. The kids love the fresh vegetables and we support local too.", stars: 5 },
-      { name: "Ana M.", city: "Zagreb", text: "Quality is incomparable to any shop. Every delivery is a surprise – always something new and seasonal.", stars: 5 },
-      { name: "Tomislav R.", city: "Zagreb", text: "Perfect for a busy lifestyle. Healthy, local, fresh – delivered to the office door!", stars: 5 },
+      { name: "Ivan P.", city: "Zaprešić", text: "The Super basket is ideal for our family of four. The kids love the fresh vegetables and we support local too.", stars: 5 },
+      { name: "Ana M.", city: "Samobor", text: "Quality is incomparable to any shop. Every delivery is a surprise – always something new and seasonal.", stars: 5 },
+      { name: "Tomislav R.", city: "Velika Gorica", text: "Perfect for a busy lifestyle. Healthy, local, fresh – delivered to the office door!", stars: 5 },
     ],
     ctaTitle: "Taste the difference of truly fresh food",
     ctaSub: "Join hundreds of happy customers who receive a basket of fresh vegetables every 2 weeks.",
@@ -164,9 +164,6 @@ export default function HomePage() {
               <div style={{ background: "white", borderRadius: 20, overflow: "hidden", boxShadow: "0 4px 24px rgba(28,58,40,0.12)", position: "relative" }}>
                 <div style={{ height: 260, overflow: "hidden", position: "relative" }}>
                   <img src="/images/panier-eko.png" alt="Košara Eko" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
-                  <div style={{ position: "absolute", top: 14, right: 14, background: "#4a8a3a", color: "white", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", padding: "0.3rem 0.75rem", borderRadius: 20, textTransform: "uppercase" }}>
-                    {lang === "hr" ? "Najpopularnije" : "Most popular"}
-                  </div>
                 </div>
                 <div style={{ padding: "1.75rem" }}>
                   <h3 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, color: "#1c3a28", marginBottom: "0.4rem" }}>{tx.eko.name}</h3>
@@ -181,8 +178,11 @@ export default function HomePage() {
               </div>
               {/* Super */}
               <div style={{ background: "white", borderRadius: 20, overflow: "hidden", boxShadow: "0 4px 24px rgba(28,58,40,0.1)" }}>
-                <div style={{ height: 260, overflow: "hidden" }}>
+                <div style={{ height: 260, overflow: "hidden", position: "relative" }}>
                   <img src="/images/panier-super.png" alt="Košara Super" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
+                  <div style={{ position: "absolute", top: 14, right: 14, background: "#4a8a3a", color: "white", fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", padding: "0.3rem 0.75rem", borderRadius: 20, textTransform: "uppercase" }}>
+                    {lang === "hr" ? "Najpopularnije" : "Most popular"}
+                  </div>
                 </div>
                 <div style={{ padding: "1.75rem" }}>
                   <h3 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, color: "#1c3a28", marginBottom: "0.4rem" }}>{tx.super.name}</h3>
