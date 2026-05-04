@@ -82,6 +82,8 @@ export default function Footer() {
               <a href="mailto:lucija@verdihrvatska.com" style={footLink}>lucija@verdihrvatska.com</a>
               <a href="tel:0998216219" style={footLink}>099 821 6219</a>
               <p style={{ color: "#8ab09a", fontSize: 13, marginTop: "0.4rem" }}>{tx.company}</p>
+              <p style={{ color: "#8ab09a", fontSize: 13 }}>OIB: 23568488873</p>
+              <p style={{ color: "#8ab09a", fontSize: 13 }}>Susedgradska ulica 3, 10000 Zagreb</p>
             </div>
           </div>
         </div>

@@ -1,12 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
-import { readFileSync } from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
+import { randomBytes } from "crypto";
+import { sendPasswordResetEmail } from "@/lib/email";
 
 interface User {
   id: string;
   email: string;
   firstName: string;
   lastName: string;
+  passwordHash: string;
+  resetToken?: string;
+  resetTokenExpiry?: number;
+  [key: string]: unknown;
 }
 
 export async function POST(request: NextRequest) {
@@ -19,20 +25,28 @@ export async function POST(request: NextRequest) {
     try {
       users = JSON.parse(readFileSync(dataPath, "utf-8"));
     } catch {
-      // file may not exist yet
+      return NextResponse.json({ ok: true });
     }
 
     const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
 
-    // Always return success to avoid email enumeration attacks
     if (user) {
-      // In production: send a real password reset email here
-      // For now, we log the request and return success silently
-      console.log(`[forgot-password] Reset requested for: ${email}`);
+      const token = randomBytes(32).toString("hex");
+      const expiry = Date.now() + 60 * 60 * 1000; // 1 sat
+
+      user.resetToken = token;
+      user.resetTokenExpiry = expiry;
+      writeFileSync(dataPath, JSON.stringify(users, null, 2));
+
+      const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://verdihrvatska.com";
+      const resetLink = `${siteUrl}/nova-lozinka?token=${token}`;
+
+      await sendPasswordResetEmail(user.email, user.firstName, resetLink);
     }
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (err) {
+    console.error("forgot-password error:", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

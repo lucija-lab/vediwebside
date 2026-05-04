@@ -9,10 +9,10 @@ interface LangCtx {
   setLang: (l: Lang) => void;
 }
 
-const LanguageContext = createContext<LangCtx>({ lang: "en", setLang: () => {} });
+const LanguageContext = createContext<LangCtx>({ lang: "hr", setLang: () => {} });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>("en");
+  const [lang, setLangState] = useState<Lang>("hr");
 
   useEffect(() => {
     const saved = localStorage.getItem("verdi-lang") as Lang;

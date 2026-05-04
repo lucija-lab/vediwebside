@@ -54,10 +54,11 @@ export async function createMinimaxInvoice(params: {
   customerCity: string;
   customerEmail: string;
   plan: string;
+  deliveryDate?: string;
 }) {
   const token = await getToken();
   const orgId = await getOrgId();
-  const today = new Date().toISOString().split("T")[0];
+  const today = params.deliveryDate ?? new Date().toISOString().split("T")[0];
   const price = PLAN_PRICE[params.plan] ?? 0;
   const label = PLAN_LABEL[params.plan] ?? params.plan;
 

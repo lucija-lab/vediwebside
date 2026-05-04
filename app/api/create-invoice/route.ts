@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createMinimaxInvoice } from "@/lib/minimax";
+import { sendOrderConfirmationEmail } from "@/lib/email";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: "2026-03-25.dahlia" as any });
 
@@ -39,6 +40,15 @@ export async function POST(req: NextRequest) {
       customerEmail: email,
       plan,
     });
+
+    // Envoyer email de confirmation en croate
+    if (email) {
+      const firstName = name.split(" ")[0];
+      sendOrderConfirmationEmail(email, firstName, plan).catch(err =>
+        console.error("Email confirmation error:", err.message)
+      );
+    }
+
     return NextResponse.json({ ok: true, invoiceId: invoice?.Id ?? invoice?.id });
   } catch (err: any) {
     console.error("MiniMax invoice error:", err.message);

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken, getUsers } from "@/lib/auth";
 import { getDeliveries, updateDelivery, createDelivery } from "@/lib/deliveries";
+import { getSubscriptions } from "@/lib/subscriptions";
+import { createMinimaxInvoice } from "@/lib/minimax";
 import { randomBytes } from "crypto";
 
 export async function GET(req: NextRequest) {
@@ -75,5 +77,23 @@ export async function PATCH(req: NextRequest) {
   }
 
   const ok = updateDelivery(id, updates);
+
+  // Créer facture Minimax au moment de la livraison
+  if (updates.status === "delivered" && delivery.status !== "delivered") {
+    const subs = getSubscriptions();
+    const sub = subs.find(s => s.userId === delivery.userId && s.status === "active");
+    const client = users.find(u => u.id === delivery.userId);
+    if (client && sub) {
+      createMinimaxInvoice({
+        customerName: `${client.firstName} ${client.lastName}`,
+        customerAddress: client.address,
+        customerCity: client.city,
+        customerEmail: client.email,
+        plan: sub.plan,
+        deliveryDate: delivery.scheduledDate,
+      }).catch(err => console.error("Minimax invoice error:", err.message));
+    }
+  }
+
   return NextResponse.json({ ok });
 }
