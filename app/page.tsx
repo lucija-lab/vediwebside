@@ -40,7 +40,7 @@ const content = {
       { name: "Ana M.", city: "Samobor", text: "Kvaliteta je neusporediva s trgovinom. Svaka dostava je iznenađenje – uvijek nešto novo i sezonsko.", stars: 5 },
       { name: "Tomislav R.", city: "Velika Gorica", text: "Odlično rješenje za užurban ritam života. Zdravo, lokalno, svježe – i dostavljeno na vrata ureda!", stars: 5 },
     ],
-    ctaTitle: "Spremi se na okus prave svježe hrane",
+    ctaTitle: "Pripremi se na okus prave svježe hrane",
     ctaSub: "Pridruži se stotinama zadovoljnih kupaca koji svaka 2 tjedna dobivaju košaricu svježeg povrća.",
     ctaBtn: "Pogledaj košarice",
   },
