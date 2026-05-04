@@ -44,7 +44,7 @@
     "taman": {
       "name": "Taman Košara",
       "price": "59",
-      "period": "/ mjes.",
+      "period": "/ mjes. (uklj. PDV)",
       "tag": "Najpopularnije",
       "features": [
         "Min. 7 kg povrća",
@@ -59,7 +59,7 @@
     "super": {
       "name": "Super Košara",
       "price": "71",
-      "period": "/ mjes.",
+      "period": "/ mjes. (uklj. PDV)",
       "tag": "Premium",
       "features": [
         "Min. 10.5 kg povrća",
@@ -115,7 +115,7 @@
     },
     "cabrajec": {
       "name": "OPG Krešimir Čabrajec",
-      "location": "Utrine, Zagreb",
+      "location": "Utrine, Zaprešić",
       "desc": "Na tržnici Utrine od samog otvorenja. Svježe ubrano i nespricirano povrće, 4 generacije na OPG-u."
     },
     "lackovic": {
@@ -125,12 +125,12 @@
     },
     "milicevic": {
       "name": "OPG Miličević",
-      "location": "Sesvete, Zagreb",
+      "location": "Sesvete, Velika Gorica",
       "desc": "8 ha s fokusom na održivost i kvalitetu. Uz povrće, proizvode hladno prešane sokove iz vlastitih voćnjaka."
     },
     "novak": {
       "name": "OPG Novak",
-      "location": "Mirošević, Zagreb",
+      "location": "Mirošević, Samobor",
       "desc": "Najveće zagrebačko ekološko povrtlarsko gospodarstvo. Godišnje 50+ tona ekološki certificiranog povrća."
     },
     "draganicki": {
@@ -153,7 +153,7 @@
     "formSuccess": "Poruka je poslana! Javit ćemo Vam se uskoro."
   },
   "footer": {
-    "tagline": "Svježe povrće od lokalnih OPG-ova, direktno na Vaša vrata.",
+    "tagline": "Svježe povrće od naših OPG-ova, direktno na Vaša vrata.",
     "links": "Brze veze",
     "legal": "Pravni dokumenti",
     "terms": "Uvjeti poslovanja",

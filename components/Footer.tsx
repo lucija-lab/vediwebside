@@ -6,7 +6,7 @@ import { useLang } from "@/context/LanguageContext";
 
 const t = {
   hr: {
-    tagline: "Svježe košarice direktno od lokalnih OPG-ova, svaka 2 tjedna, cijele godine.",
+    tagline: "Svježe košarice direktno od naših OPG-ova, svaka 2 tjedna, cijele godine.",
     nav: "Stranice",
     links: [
       { label: "Košarice", href: "/kosarice" },
