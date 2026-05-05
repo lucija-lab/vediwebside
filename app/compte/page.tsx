@@ -76,8 +76,6 @@ export default function ComptePage() {
   const [form, setForm] = useState({ firstName: "", lastName: "", phone: "", address: "", city: "" });
   const [saving, setSaving] = useState(false);
   const [savedMsg, setSavedMsg] = useState(false);
-  const [editingSlot, setEditingSlot] = useState<string | null>(null);
-  const [slotForm, setSlotForm] = useState({ scheduledDate: "", timeSlot: "09:00–13:00" });
   const [pageLoading, setPageLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
 
@@ -290,13 +288,13 @@ export default function ComptePage() {
                   <div style={{ background: "white", borderRadius: 16, padding: "2.5rem", textAlign: "center", color: "#9a9a8a", fontSize: 14, boxShadow: "0 1px 8px rgba(0,0,0,0.04)" }}>{tx.noDeliveries}</div>
                 ) : upcoming.map(d => (
                   <div key={d.id} style={{ background: "white", borderRadius: 16, padding: "1.5rem", boxShadow: "0 1px 8px rgba(0,0,0,0.04)", marginBottom: "0.75rem", border: "1px solid #f0ede5" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", marginBottom: editingSlot === d.id ? "1.25rem" : 0 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
                         <div style={{ width: 44, height: 44, borderRadius: 12, background: "#f0f7f3", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0 }}>🥕</div>
                         <div>
                           <p style={{ fontWeight: 700, color: "#1c3a28", fontSize: 15, marginBottom: "0.25rem" }}>{planLabel(d.plan)}</p>
                           <p style={{ fontSize: 13, color: "#6a8a72" }}>{new Date(d.scheduledDate).toLocaleDateString(lang === "hr" ? "hr-HR" : "en-GB", { weekday: "long", day: "numeric", month: "long" })}</p>
-                          <p style={{ fontSize: 12, color: "#9a9a8a", marginTop: "0.1rem" }}>{d.timeSlot} · {d.address}, {d.city}</p>
+                          <p style={{ fontSize: 12, color: "#9a9a8a", marginTop: "0.1rem" }}>{d.address}, {d.city}</p>
                           {d.livreurPhone && (
                             <p style={{ fontSize: 12, color: "#3a7a52", marginTop: "0.3rem", fontWeight: 600 }}>
                               📞 {tx.livreurContact}: <a href={`tel:${d.livreurPhone}`} style={{ color: "#3a7a52" }}>{d.livreurPhone}</a>
@@ -304,47 +302,8 @@ export default function ComptePage() {
                           )}
                         </div>
                       </div>
-                      <div style={{ display: "flex", gap: "0.6rem", alignItems: "center", flexWrap: "wrap" }}>
-                        {statusBadge(d.status)}
-                        {d.status === "pending" && editingSlot !== d.id && (
-                          <button onClick={() => { setEditingSlot(d.id); setSlotForm({ scheduledDate: d.scheduledDate, timeSlot: d.timeSlot }); }} style={{ background: "#f0f7f3", border: "1px solid #c8ddc0", color: "#3a7a52", padding: "0.35rem 0.9rem", borderRadius: 50, fontSize: 12, cursor: "pointer", fontWeight: 600 }}>
-                            ✏️ {tx.editSlot}
-                          </button>
-                        )}
-                      </div>
+                      {statusBadge(d.status)}
                     </div>
-
-                    {/* Edit slot form */}
-                    {editingSlot === d.id && (
-                      <div style={{ background: "#f5f3ee", borderRadius: 12, padding: "1.25rem", marginTop: "1rem" }}>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
-                          <div>
-                            <label style={{ fontSize: 12, fontWeight: 600, color: "#3d2b1a", display: "block", marginBottom: "0.4rem" }}>{lang === "hr" ? "Datum" : "Date"}</label>
-                            <input type="date" value={slotForm.scheduledDate} onChange={e => setSlotForm(f => ({ ...f, scheduledDate: e.target.value }))} style={{ width: "100%", padding: "0.6rem 0.75rem", border: "1.5px solid #e2d9c8", borderRadius: 8, fontSize: 13, background: "white", boxSizing: "border-box" as const }} />
-                          </div>
-                          <div>
-                            <label style={{ fontSize: 12, fontWeight: 600, color: "#3d2b1a", display: "block", marginBottom: "0.4rem" }}>{lang === "hr" ? "Termin" : "Time slot"}</label>
-                            <select value={slotForm.timeSlot} onChange={e => setSlotForm(f => ({ ...f, timeSlot: e.target.value }))} style={{ width: "100%", padding: "0.6rem 0.75rem", border: "1.5px solid #e2d9c8", borderRadius: 8, fontSize: 13, background: "white", boxSizing: "border-box" as const }}>
-                              <option>09:00–13:00</option>
-                              <option>13:00–17:00</option>
-                              <option>17:00–20:00</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div style={{ display: "flex", gap: "0.75rem" }}>
-                          <button onClick={async () => {
-                            await fetch("/api/deliveries", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: d.id, ...slotForm }) });
-                            setDeliveries(prev => prev.map(x => x.id === d.id ? { ...x, ...slotForm } : x));
-                            setEditingSlot(null);
-                          }} style={{ background: "#3a7a52", color: "white", border: "none", padding: "0.6rem 1.5rem", borderRadius: 50, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
-                            {tx.saveSlot}
-                          </button>
-                          <button onClick={() => setEditingSlot(null)} style={{ background: "none", border: "1px solid #e2d9c8", color: "#9a9a8a", padding: "0.6rem 1.25rem", borderRadius: 50, fontSize: 13, cursor: "pointer" }}>
-                            {tx.cancelEdit}
-                          </button>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 ))}
               </div>
