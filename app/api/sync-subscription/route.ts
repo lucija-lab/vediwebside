@@ -15,7 +15,8 @@ function nextDeliveryDate(): string {
   return d.toISOString().split("T")[0];
 }
 
-function planFromPriceId(priceId: string): "taman" | "super" {
+function planFromPriceId(priceId: string): "taman" | "eko" | "super" {
+  if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_EKO) return "eko";
   if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_SUPER) return "super";
   return "taman";
 }
@@ -27,12 +28,11 @@ export async function POST(req: NextRequest) {
   const userId = verifyToken(token);
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const users = getUsers();
+  const users = await getUsers();
   const user = users.find(u => u.id === userId);
   if (!user) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   try {
-    // Find Stripe customer by email
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
     if (customers.data.length === 0) return NextResponse.json({ subscription: null });
 
@@ -43,10 +43,9 @@ export async function POST(req: NextRequest) {
     const stripeSub = stripeSubs.data[0];
     const priceId = stripeSub.items.data[0]?.price.id || "";
     const plan = planFromPriceId(priceId);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const periodEnd = (stripeSub as any).current_period_end;
 
-    const subs = getSubscriptions();
+    const subs = await getSubscriptions();
     const existing = subs.findIndex(s => s.userId === userId);
     const newSub = {
       id: existing >= 0 ? subs[existing].id : randomBytes(12).toString("hex"),
@@ -61,14 +60,13 @@ export async function POST(req: NextRequest) {
 
     if (existing >= 0) subs[existing] = newSub;
     else subs.push(newSub);
-    saveSubscriptions(subs);
+    await saveSubscriptions(subs);
 
-    // Create first delivery if none exists
     if (stripeSub.status === "active") {
-      const deliveries = getDeliveries();
+      const deliveries = await getDeliveries();
       const hasDelivery = deliveries.some(d => d.userId === userId && d.status === "pending");
       if (!hasDelivery) {
-        createDelivery({
+        await createDelivery({
           userId,
           plan,
           address: user.address,
