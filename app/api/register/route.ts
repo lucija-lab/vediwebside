@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUsers, saveUsers, hashPassword, createToken } from "@/lib/auth";
+import { sendWelcomeEmail } from "@/lib/email";
 import { randomBytes } from "crypto";
 
 export async function POST(req: NextRequest) {
@@ -28,6 +29,10 @@ export async function POST(req: NextRequest) {
   };
 
   await saveUsers([...users, user]);
+
+  sendWelcomeEmail(user.email, user.firstName).catch(err =>
+    console.error("Welcome email error:", err.message)
+  );
 
   const token = createToken(user.id);
   const res = NextResponse.json({ ok: true, user: { id: user.id, firstName, lastName, email: user.email } });
