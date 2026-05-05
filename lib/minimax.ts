@@ -1,6 +1,8 @@
 const BASE = "https://moj.minimax.hr/HR/API";
 
 let cachedToken: { token: string; expires: number } | null = null;
+let cachedOrgId: number | null = null;
+let cachedPremiseId: number | null = null;
 
 async function getToken(): Promise<string> {
   if (cachedToken && Date.now() < cachedToken.expires) return cachedToken.token;
@@ -25,6 +27,7 @@ async function getToken(): Promise<string> {
 }
 
 async function getOrgId(): Promise<number> {
+  if (cachedOrgId) return cachedOrgId;
   const token = await getToken();
   const res = await fetch(`${BASE}/api/orgs/allOrgs?startRowIndex=0&endRowIndex=1`, {
     headers: { Authorization: `Bearer ${token}` },
@@ -33,19 +36,44 @@ async function getOrgId(): Promise<number> {
   const data = await res.json();
   const org = data?.Rows?.[0] ?? data?.[0];
   if (!org) throw new Error("No MiniMax organisation found");
-  return org.OrganisationId ?? org.organisationId;
+  cachedOrgId = org.OrganisationId ?? org.organisationId;
+  return cachedOrgId!;
 }
 
-const PLAN_LABEL: Record<string, string> = {
-  taman: "Košara Taman – mjesečna pretplata",
-  eko: "Košara Eko – mjesečna pretplata",
-  super: "Košara Super – mjesečna pretplata",
-};
+async function getBusinessPremiseId(orgId: number): Promise<number> {
+  if (cachedPremiseId) return cachedPremiseId;
+  const token = await getToken();
+  const res = await fetch(`${BASE}/api/orgs/${orgId}/businesspremises`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`MiniMax business premises error: ${res.status}`);
+  const data = await res.json();
+  const list: any[] = data?.Rows ?? data ?? [];
+  // Oznaka poslovnog prostora = "01" (Verdi shop)
+  const premise = list.find(p =>
+    p.BusinessPremiseCode === "01" || p.Code === "01" || p.Oznaka === "01"
+  );
+  if (!premise) throw new Error("Business premise 01 not found in MiniMax");
+  cachedPremiseId = premise.BusinessPremiseID ?? premise.Id ?? premise.id;
+  return cachedPremiseId!;
+}
 
-const PLAN_PRICE: Record<string, number> = {
-  taman: 62,
-  eko: 66.5,
-  super: 71,
+// Prix par livraison (abonnement = 2 livraisons/mois)
+// Ligne 1 : povrće OPG (TVA 5%)
+// Ligne 2 : Verdi commission + dostava (TVA 25%)
+const PLAN_ROWS: Record<string, Array<{ Description: string; Price: number; VATRate: number }>> = {
+  taman: [
+    { Description: "Povrće – sezonska košarica Taman (OPG)", Price: 13.50, VATRate: 5 },
+    { Description: "Verdi – dostava i usluga", Price: 13.46, VATRate: 25 },
+  ],
+  eko: [
+    { Description: "Ekološko povrće – sezonska košarica Eko (OPG)", Price: 18.00, VATRate: 5 },
+    { Description: "Verdi – dostava i usluga", Price: 11.48, VATRate: 25 },
+  ],
+  super: [
+    { Description: "Povrće – sezonska košarica Super (OPG)", Price: 19.50, VATRate: 5 },
+    { Description: "Verdi – dostava i usluga", Price: 12.02, VATRate: 25 },
+  ],
 };
 
 export async function createMinimaxInvoice(params: {
@@ -58,28 +86,35 @@ export async function createMinimaxInvoice(params: {
 }) {
   const token = await getToken();
   const orgId = await getOrgId();
+  const premiseId = await getBusinessPremiseId(orgId);
   const today = params.deliveryDate ?? new Date().toISOString().split("T")[0];
-  const price = PLAN_PRICE[params.plan] ?? 0;
-  const label = PLAN_LABEL[params.plan] ?? params.plan;
+  const rows = PLAN_ROWS[params.plan] ?? PLAN_ROWS.taman;
 
   const body = {
     DocumentDate: today,
     DueDate: today,
+    // Fiskalizacija: poslovni prostor "01", uređaj "02"
+    BusinessPremise: { BusinessPremiseID: premiseId },
+    ElectronicDevice: { ElectronicDeviceCode: "02" },
     Customer: {
       Name: params.customerName,
       Address: params.customerAddress,
       City: params.customerCity,
       CountryCode: "HR",
       Email: params.customerEmail,
+      // B2C — pas d'OIB requis
+      CustomerCode: "02",
     },
-    IssuedInvoiceRows: [
-      {
-        Description: label,
-        Quantity: 1,
-        UnitOfMeasure: "kom",
-        Price: price,
-        VATRate: 25,
-      },
+    IssuedInvoiceRows: rows.map(row => ({
+      Description: row.Description,
+      Quantity: 1,
+      UnitOfMeasure: "kom",
+      Price: row.Price,
+      VATRate: row.VATRate,
+    })),
+    // Paiement par carte (Stripe)
+    IssuedInvoicePayments: [
+      { PaymentType: { PaymentTypeCode: "K" } },
     ],
   };
 
