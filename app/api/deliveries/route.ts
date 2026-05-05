@@ -11,13 +11,13 @@ export async function GET(req: NextRequest) {
   const userId = verifyToken(token);
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const users = getUsers();
+  const users = await getUsers();
   const user = users.find(u => u.id === userId);
   if (!user) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  const all = getDeliveries();
+  const all = await getDeliveries();
 
-  const enrichDelivery = (d: ReturnType<typeof getDeliveries>[0]) => {
+  const enrichDelivery = (d: Awaited<ReturnType<typeof getDeliveries>>[0]) => {
     if (d.livreurId) {
       const livreur = users.find(u => u.id === d.livreurId);
       return { ...d, livreurPhone: livreur?.phone || null, livreurName: livreur ? `${livreur.firstName} ${livreur.lastName}` : null };
@@ -40,12 +40,12 @@ export async function POST(req: NextRequest) {
   if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const userId = verifyToken(token);
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const users = getUsers();
+  const users = await getUsers();
   const user = users.find(u => u.id === userId);
   if (!user || user.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
   const body = await req.json();
-  const delivery = createDelivery({ ...body, id: randomBytes(12).toString("hex") });
+  const delivery = await createDelivery({ ...body, id: randomBytes(12).toString("hex") });
   return NextResponse.json({ delivery });
 }
 
@@ -58,17 +58,16 @@ export async function PATCH(req: NextRequest) {
   const { id, ...updates } = await req.json();
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
-  const users = getUsers();
+  const users = await getUsers();
   const user = users.find(u => u.id === userId);
   if (!user) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-  const all = getDeliveries();
+  const all = await getDeliveries();
   const delivery = all.find(d => d.id === id);
   if (!delivery) return NextResponse.json({ error: "Delivery not found" }, { status: 404 });
 
   if (user.role === "client") {
     if (delivery.userId !== userId) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    // Client can only update these fields on pending deliveries
     const allowed = ["status", "timeSlot", "scheduledDate"];
     const forbidden = Object.keys(updates).filter(k => !allowed.includes(k));
     if (forbidden.length > 0) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
@@ -76,11 +75,11 @@ export async function PATCH(req: NextRequest) {
     if (delivery.status !== "pending") return NextResponse.json({ error: "Cannot modify non-pending delivery" }, { status: 400 });
   }
 
-  const ok = updateDelivery(id, updates);
+  const ok = await updateDelivery(id, updates);
 
-  // Créer facture Minimax au moment de la livraison
+  // Facture Minimax à la livraison
   if (updates.status === "delivered" && delivery.status !== "delivered") {
-    const subs = getSubscriptions();
+    const subs = await getSubscriptions();
     const sub = subs.find(s => s.userId === delivery.userId && s.status === "active");
     const client = users.find(u => u.id === delivery.userId);
     if (client && sub) {

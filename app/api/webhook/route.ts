@@ -9,8 +9,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-03-25.dahlia",
 });
 
-function planFromPriceId(priceId: string): "taman" | "super" {
+function planFromPriceId(priceId: string): "taman" | "eko" | "super" {
   if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_TAMAN) return "taman";
+  if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_EKO) return "eko";
   if (priceId === process.env.NEXT_PUBLIC_STRIPE_PRICE_SUPER) return "super";
   return "taman";
 }
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
       const session = event.data.object as Stripe.Checkout.Session;
       if (session.mode !== "subscription") break;
 
-      const users = getUsers();
+      const users = await getUsers();
       const user = users.find(u => u.email.toLowerCase() === (session.customer_email || "").toLowerCase());
       if (!user) break;
 
@@ -45,13 +46,12 @@ export async function POST(req: NextRequest) {
       const sub = await stripe.subscriptions.retrieve(stripeSubId);
       const priceId = sub.items.data[0]?.price.id || "";
       const plan = planFromPriceId(priceId);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const periodEnd = (sub as any).current_period_end;
       const periodEndDate = periodEnd
         ? new Date(periodEnd * 1000).toISOString()
         : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
-      const subs = getSubscriptions();
+      const subs = await getSubscriptions();
       const existing = subs.findIndex(s => s.userId === user.id);
       const newSub = {
         id: randomBytes(12).toString("hex"),
@@ -66,10 +66,9 @@ export async function POST(req: NextRequest) {
 
       if (existing >= 0) subs[existing] = newSub;
       else subs.push(newSub);
-      saveSubscriptions(subs);
+      await saveSubscriptions(subs);
 
-      // Create first delivery
-      createDelivery({
+      await createDelivery({
         userId: user.id,
         plan,
         address: user.address,
@@ -84,25 +83,24 @@ export async function POST(req: NextRequest) {
 
     case "customer.subscription.deleted": {
       const sub = event.data.object as Stripe.Subscription;
-      const subs = getSubscriptions();
+      const subs = await getSubscriptions();
       const idx = subs.findIndex(s => s.stripeSubscriptionId === sub.id);
       if (idx >= 0) {
         subs[idx].status = "canceled";
-        saveSubscriptions(subs);
+        await saveSubscriptions(subs);
       }
       break;
     }
 
     case "customer.subscription.updated": {
       const sub = event.data.object as Stripe.Subscription;
-      const subs = getSubscriptions();
+      const subs = await getSubscriptions();
       const idx = subs.findIndex(s => s.stripeSubscriptionId === sub.id);
       if (idx >= 0) {
         subs[idx].status = sub.status as "active" | "canceled" | "past_due";
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const end = (sub as any).current_period_end;
         if (end) subs[idx].currentPeriodEnd = new Date(end * 1000).toISOString();
-        saveSubscriptions(subs);
+        await saveSubscriptions(subs);
       }
       break;
     }

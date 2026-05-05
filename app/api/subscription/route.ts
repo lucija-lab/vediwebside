@@ -9,6 +9,6 @@ export async function GET(req: NextRequest) {
   const userId = verifyToken(token);
   if (!userId) return NextResponse.json({ subscription: null });
 
-  const subscription = getUserSubscription(userId);
+  const subscription = await getUserSubscription(userId);
   return NextResponse.json({ subscription });
 }

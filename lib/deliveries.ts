@@ -1,8 +1,7 @@
-import fs from "fs";
-import path from "path";
 import { randomBytes } from "crypto";
+import { getRedis } from "./redis";
 
-const FILE = path.join(process.cwd(), "data", "deliveries.json");
+const KEY = "verdi:deliveries";
 
 export type DeliveryStatus = "pending" | "assigned" | "delivered" | "skipped" | "failed";
 
@@ -10,7 +9,7 @@ export interface Delivery {
   id: string;
   userId: string;
   livreurId?: string;
-  plan: "taman" | "super";
+  plan: "taman" | "eko" | "super";
   address: string;
   city: string;
   scheduledDate: string;
@@ -20,37 +19,38 @@ export interface Delivery {
   createdAt: string;
 }
 
-export function getDeliveries(): Delivery[] {
+export async function getDeliveries(): Promise<Delivery[]> {
   try {
-    if (!fs.existsSync(FILE)) return [];
-    return JSON.parse(fs.readFileSync(FILE, "utf-8"));
+    const redis = await getRedis();
+    const data = await redis.get(KEY);
+    if (!data) return [];
+    return JSON.parse(data);
   } catch {
     return [];
   }
 }
 
-export function saveDeliveries(deliveries: Delivery[]) {
-  const dir = path.dirname(FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(FILE, JSON.stringify(deliveries, null, 2));
+export async function saveDeliveries(deliveries: Delivery[]): Promise<void> {
+  const redis = await getRedis();
+  await redis.set(KEY, JSON.stringify(deliveries));
 }
 
-export function createDelivery(data: Omit<Delivery, "id" | "createdAt">): Delivery {
+export async function createDelivery(data: Omit<Delivery, "id" | "createdAt">): Promise<Delivery> {
   const delivery: Delivery = {
     ...data,
     id: randomBytes(12).toString("hex"),
     createdAt: new Date().toISOString(),
   };
-  const all = getDeliveries();
-  saveDeliveries([...all, delivery]);
+  const all = await getDeliveries();
+  await saveDeliveries([...all, delivery]);
   return delivery;
 }
 
-export function updateDelivery(id: string, updates: Partial<Delivery>): boolean {
-  const all = getDeliveries();
+export async function updateDelivery(id: string, updates: Partial<Delivery>): Promise<boolean> {
+  const all = await getDeliveries();
   const idx = all.findIndex(d => d.id === id);
   if (idx === -1) return false;
   all[idx] = { ...all[idx], ...updates };
-  saveDeliveries(all);
+  await saveDeliveries(all);
   return true;
 }

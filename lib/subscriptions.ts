@@ -1,7 +1,6 @@
-import fs from "fs";
-import path from "path";
+import { getRedis } from "./redis";
 
-const FILE = path.join(process.cwd(), "data", "subscriptions.json");
+const KEY = "verdi:subscriptions";
 
 export type SubscriptionStatus = "active" | "canceled" | "past_due" | "paused";
 
@@ -10,28 +9,29 @@ export interface Subscription {
   userId: string;
   stripeSubscriptionId: string;
   stripeCustomerId: string;
-  plan: "taman" | "super";
+  plan: "taman" | "eko" | "super";
   status: SubscriptionStatus;
   currentPeriodEnd: string;
   createdAt: string;
 }
 
-export function getSubscriptions(): Subscription[] {
+export async function getSubscriptions(): Promise<Subscription[]> {
   try {
-    if (!fs.existsSync(FILE)) return [];
-    return JSON.parse(fs.readFileSync(FILE, "utf-8"));
+    const redis = await getRedis();
+    const data = await redis.get(KEY);
+    if (!data) return [];
+    return JSON.parse(data);
   } catch {
     return [];
   }
 }
 
-export function saveSubscriptions(subs: Subscription[]) {
-  const dir = path.dirname(FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(FILE, JSON.stringify(subs, null, 2));
+export async function saveSubscriptions(subs: Subscription[]): Promise<void> {
+  const redis = await getRedis();
+  await redis.set(KEY, JSON.stringify(subs));
 }
 
-export function getUserSubscription(userId: string): Subscription | null {
-  const subs = getSubscriptions();
+export async function getUserSubscription(userId: string): Promise<Subscription | null> {
+  const subs = await getSubscriptions();
   return subs.find(s => s.userId === userId && s.status === "active") || null;
 }

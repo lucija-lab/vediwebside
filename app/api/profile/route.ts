@@ -10,7 +10,7 @@ export async function PUT(req: NextRequest) {
 
   const { firstName, lastName, phone, address, city } = await req.json();
 
-  const users = getUsers();
+  const users = await getUsers();
   const idx = users.findIndex(u => u.id === userId);
   if (idx === -1) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
@@ -23,6 +23,6 @@ export async function PUT(req: NextRequest) {
     ...(city && { city }),
   };
 
-  saveUsers(users);
+  await saveUsers(users);
   return NextResponse.json({ ok: true, user: users[idx] });
 }

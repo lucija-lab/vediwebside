@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   const userId = verifyToken(token);
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  const users = getUsers();
+  const users = await getUsers();
   const me = users.find(u => u.id === userId);
   if (!me || me.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 

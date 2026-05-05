@@ -1,9 +1,8 @@
 import { scryptSync, randomBytes, timingSafeEqual, createHmac } from "crypto";
-import fs from "fs";
-import path from "path";
+import { getRedis } from "./redis";
 
 const SECRET = process.env.AUTH_SECRET || "verdi-secret-key-2024";
-const USERS_FILE = path.join(process.cwd(), "data", "users.json");
+const KEY = "verdi:users";
 
 export type UserRole = "client" | "admin" | "livreur";
 
@@ -18,21 +17,24 @@ export interface User {
   passwordHash: string;
   createdAt: string;
   role: UserRole;
+  resetToken?: string;
+  resetTokenExpiry?: number;
 }
 
-export function getUsers(): User[] {
+export async function getUsers(): Promise<User[]> {
   try {
-    if (!fs.existsSync(USERS_FILE)) return [];
-    return JSON.parse(fs.readFileSync(USERS_FILE, "utf-8"));
+    const redis = await getRedis();
+    const data = await redis.get(KEY);
+    if (!data) return [];
+    return JSON.parse(data);
   } catch {
     return [];
   }
 }
 
-export function saveUsers(users: User[]) {
-  const dir = path.dirname(USERS_FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
+export async function saveUsers(users: User[]): Promise<void> {
+  const redis = await getRedis();
+  await redis.set(KEY, JSON.stringify(users));
 }
 
 export function hashPassword(password: string): string {

@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   const userId = verifyToken(token);
   if (!userId) return NextResponse.json({ user: null });
 
-  const users = getUsers();
+  const users = await getUsers();
   const user = users.find(u => u.id === userId);
   if (!user) return NextResponse.json({ user: null });
 

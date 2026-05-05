@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unesite e-mail i lozinku." }, { status: 400 });
   }
 
-  const users = getUsers();
+  const users = await getUsers();
   const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
 
   if (!user || !verifyPassword(password, user.passwordHash)) {

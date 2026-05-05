@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Sva polja su obavezna." }, { status: 400 });
   }
 
-  const users = getUsers();
+  const users = await getUsers();
   if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
     return NextResponse.json({ error: "E-mail adresa je već registrirana." }, { status: 409 });
   }
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     role: "client" as const,
   };
 
-  saveUsers([...users, user]);
+  await saveUsers([...users, user]);
 
   const token = createToken(user.id);
   const res = NextResponse.json({ ok: true, user: { id: user.id, firstName, lastName, email: user.email } });
