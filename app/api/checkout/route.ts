@@ -14,8 +14,8 @@ export async function POST(req: NextRequest) {
     mode: "subscription",
     payment_method_types: ["card"],
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${siteUrl}/hr/checkout?session_id={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${siteUrl}/hr/kosarice`,
+    success_url: `${siteUrl}/checkout/uspjeh?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${siteUrl}/kosarice`,
     locale: "hr",
     allow_promotion_codes: true,
     subscription_data: {
