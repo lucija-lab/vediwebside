@@ -1,4 +1,6 @@
 const BASE = "https://moj.minimax.hr/HR/API";
+const TOKEN_URL = "https://moj.minimax.hr/Token";
+
 
 let cachedToken: { token: string; expires: number } | null = null;
 let cachedOrgId: number | null = null;
@@ -7,7 +9,7 @@ let cachedPremiseId: number | null = null;
 async function getToken(): Promise<string> {
   if (cachedToken && Date.now() < cachedToken.expires) return cachedToken.token;
 
-  const res = await fetch(`${BASE}/token`, {
+  const res = await fetch(TOKEN_URL, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
