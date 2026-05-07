@@ -42,7 +42,7 @@ export async function GET() {
       DateIssued: today + "T00:00:00",
       DateTransaction: today + "T00:00:00",
       DateDue: today + "T00:00:00",
-      DocumentNumbering: { ID: 62860 },
+      DocumentNumbering: { ID: 65500 },
       AddresseeName: "Test Klijent",
       AddresseeAddress: "Ilica 1",
       AddresseeCity: "Zagreb",
