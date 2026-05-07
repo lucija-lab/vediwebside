@@ -9,11 +9,11 @@ export async function GET() {
 
   if (lucija) {
     lucija.role = "admin";
-    lucija.passwordHash = hashPassword("Verdi2024!");
+    lucija.passwordHash = hashPassword("kinkyinky098!");
   }
   if (marijo) {
     marijo.role = "livreur";
-    marijo.passwordHash = hashPassword("Livreur2024!");
+    marijo.passwordHash = hashPassword("MarijoVerdi061");
   }
 
   await saveUsers(users);
@@ -21,8 +21,8 @@ export async function GET() {
   return NextResponse.json({
     ok: true,
     accounts: [
-      { email: "lucija@verdihrvatska.com", password: "Verdi2024!", role: "admin", found: !!lucija },
-      { email: "marijo.valetic@gmail.com", password: "Livreur2024!", role: "livreur", found: !!marijo },
+      { email: "lucija@verdihrvatska.com", role: "admin", found: !!lucija },
+      { email: "marijo.valetic@gmail.com", role: "livreur", found: !!marijo },
     ],
   });
 }
