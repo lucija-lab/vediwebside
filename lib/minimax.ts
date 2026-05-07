@@ -4,7 +4,6 @@ const TOKEN_URL = "https://moj.minimax.hr/HR/AUT/oauth20/token";
 
 let cachedToken: { token: string; expires: number } | null = null;
 let cachedOrgId: number | null = null;
-let cachedPremiseId: number | null = null;
 
 async function getToken(): Promise<string> {
   if (cachedToken && Date.now() < cachedToken.expires) return cachedToken.token;
@@ -42,47 +41,22 @@ async function getOrgId(): Promise<number> {
   return cachedOrgId!;
 }
 
-async function getBusinessPremiseId(orgId: number): Promise<number | null> {
-  if (cachedPremiseId) return cachedPremiseId;
-  const token = await getToken();
-  // Try multiple known endpoint paths
-  const paths = [
-    `${BASE}/api/orgs/${orgId}/businesspremises`,
-    `${BASE}/api/orgs/${orgId}/issuedInvoices/businesspremises`,
-    `${BASE}/api/orgs/${orgId}/Settings/IssuedInvoiceBusinessPremises`,
-  ];
-  for (const path of paths) {
-    const res = await fetch(path, { headers: { Authorization: `Bearer ${token}` } });
-    if (!res.ok) continue;
-    const data = await res.json();
-    const list: any[] = data?.Rows ?? data ?? [];
-    const premise = list.find(p =>
-      p.BusinessPremiseCode === "01" || p.Code === "01" || p.Oznaka === "01"
-    );
-    if (premise) {
-      cachedPremiseId = premise.BusinessPremiseID ?? premise.Id ?? premise.id;
-      return cachedPremiseId!;
-    }
-  }
-  return null;
-}
 
-// Facture mensuelle = 2 livraisons. Quantity: 2 sur chaque ligne.
-// Taman: 2×€13.50 (5%) + 2×€13.46 (25%) = €62
-// Eko:   2×€18.00 (5%) + 2×€11.48 (25%) = €66.50
-// Super: 2×€19.50 (5%) + 2×€12.02 (25%) = €71
-const PLAN_ROWS: Record<string, Array<{ Description: string; Price: number; VATRate: number }>> = {
+// Item IDs from Minimax catalogue (discovered from existing invoice)
+// VatRate ID 1 = 25% (S), VatRate ID 2 = 5% (0)
+// DocumentNumbering ID: 62860
+const PLAN_ROWS: Record<string, Array<{ itemId: number; price: number; vatRateId: number }>> = {
   taman: [
-    { Description: "Povrće – sezonska košarica Taman (OPG)", Price: 13.50, VATRate: 5 },
-    { Description: "Verdi – dostava i usluga Taman", Price: 13.46, VATRate: 25 },
+    { itemId: 3668110, price: 13.50, vatRateId: 2 }, // Taman Košarica (OPG) 5%
+    { itemId: 3668111, price: 13.46, vatRateId: 1 }, // Taman Usluga (Verdi) 25%
   ],
   eko: [
-    { Description: "Ekološko povrće – sezonska košarica Eko (OPG)", Price: 18.00, VATRate: 5 },
-    { Description: "Verdi – dostava i usluga Eko", Price: 11.48, VATRate: 25 },
+    { itemId: 3671799, price: 18.00, vatRateId: 2 }, // Eko Košarica (OPG) 5%
+    { itemId: 3671800, price: 11.48, vatRateId: 1 }, // Eko Usluga (Verdi) 25%
   ],
   super: [
-    { Description: "Povrće – sezonska košarica Super (OPG)", Price: 19.50, VATRate: 5 },
-    { Description: "Verdi – dostava i usluga Super", Price: 12.02, VATRate: 25 },
+    { itemId: 3668105, price: 19.50, vatRateId: 2 }, // Super Košarica (OPG) 5%
+    { itemId: 3668106, price: 12.02, vatRateId: 1 }, // Super Usluga (Verdi) 25%
   ],
 };
 
@@ -96,34 +70,24 @@ export async function createMinimaxInvoice(params: {
 }) {
   const token = await getToken();
   const orgId = await getOrgId();
-  const premiseId = await getBusinessPremiseId(orgId);
   const today = params.deliveryDate ?? new Date().toISOString().split("T")[0];
   const rows = PLAN_ROWS[params.plan] ?? PLAN_ROWS.taman;
 
   const body: any = {
-    DocumentDate: today,
-    DueDate: today,
-    DeliveryDate: params.deliveryDate ?? today,
-    DeliveryMethod: "Dostava na adresu",
-    DeliveryPremise: "verdi webshop, Zagreb",
+    DateIssued: today,
+    DateTransaction: today,
+    DateDue: today,
+    DocumentNumbering: { ID: 62860 },
+    AddresseeName: params.customerName,
+    AddresseeAddress: params.customerAddress,
+    AddresseeCity: params.customerCity,
+    AddresseeCountryCode: "HR",
     Note: "Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!",
-    // Fiskalizacija: poslovni prostor "01", uređaj "02"
-    ...(premiseId ? { BusinessPremise: { BusinessPremiseID: premiseId } } : { BusinessPremise: { BusinessPremiseCode: "01" } }),
-    ElectronicDevice: { ElectronicDeviceCode: "02" },
-    Customer: {
-      Name: params.customerName,
-      Address: params.customerAddress,
-      City: params.customerCity,
-      CountryCode: "HR",
-      Email: params.customerEmail,
-      CustomerCode: "02",
-    },
     IssuedInvoiceRows: rows.map(row => ({
-      Description: row.Description,
+      Item: { ID: row.itemId },
       Quantity: 2,
-      UnitOfMeasure: "kom",
-      Price: row.Price,
-      VATRate: row.VATRate,
+      Price: row.price,
+      VatRate: { ID: row.vatRateId },
     })),
     IssuedInvoicePayments: [
       { PaymentType: { PaymentTypeCode: "K" } },
