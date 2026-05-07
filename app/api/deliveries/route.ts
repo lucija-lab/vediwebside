@@ -85,7 +85,7 @@ export async function PATCH(req: NextRequest) {
       d => d.userId === delivery.userId && d.status === "delivered" && d.id !== id
     ).length;
 
-    if (deliveredCount % 2 === 1) {
+    if (deliveredCount % 2 === 0) {
       const subs = await getSubscriptions();
       const sub = subs.find(s => s.userId === delivery.userId && s.status === "active");
       const client = users.find(u => u.id === delivery.userId);
