@@ -1,17 +1,32 @@
 import { NextResponse } from "next/server";
-import { createMinimaxInvoice } from "@/lib/minimax";
+
+const BASE = "https://moj.minimax.hr/HR/API";
+const TOKEN_URL = "https://moj.minimax.hr/HR/AUT/oauth20/token";
 
 export async function GET() {
   try {
-    const invoice = await createMinimaxInvoice({
-      customerName: "Test Klijent",
-      customerAddress: "Testna ulica 1",
-      customerCity: "Zagreb",
-      customerEmail: "lucija@verdihrvatska.com",
-      plan: "taman",
-      deliveryDate: new Date().toISOString().split("T")[0],
+    const tokenRes = await fetch(TOKEN_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "password",
+        username: process.env.MINIMAX_USERNAME!,
+        password: process.env.MINIMAX_PASSWORD!,
+        client_id: process.env.MINIMAX_CLIENT_ID!,
+        client_secret: process.env.MINIMAX_CLIENT_SECRET!,
+        scope: "profile",
+      }),
     });
-    return NextResponse.json({ ok: true, invoice });
+    const tokenData = await tokenRes.json();
+    if (!tokenRes.ok) return NextResponse.json({ step: "auth", error: tokenData });
+
+    const token = tokenData.access_token;
+    const orgsRes = await fetch(`${BASE}/api/currentuser/orgs`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const orgsData = await orgsRes.json();
+
+    return NextResponse.json({ step: "orgs", status: orgsRes.status, data: orgsData });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
