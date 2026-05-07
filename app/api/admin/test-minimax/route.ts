@@ -27,24 +27,15 @@ export async function GET() {
     const orgsData = await orgsRes.json();
     const orgId = orgsData?.Rows?.[0]?.Organisation?.ID;
 
-    // Try creating invoice directly without BusinessPremise lookup
+    // Minimal invoice body to find what works
     const invoiceBody = {
       DocumentDate: new Date().toISOString().split("T")[0],
-      DueDate: new Date().toISOString().split("T")[0],
       Customer: {
         Name: "Test Klijent",
-        Address: "Testna ulica 1",
-        City: "Zagreb",
-        CountryCode: "HR",
-        Email: "lucija@verdihrvatska.com",
-        CustomerCode: "02",
       },
       IssuedInvoiceRows: [
-        { Description: "Povrće – Taman košarica", Quantity: 2, UnitOfMeasure: "kom", Price: 13.50, VATRate: 5 },
-        { Description: "Verdi – dostava i usluga", Quantity: 2, UnitOfMeasure: "kom", Price: 13.46, VATRate: 25 },
+        { Description: "Test usluga", Quantity: 1, UnitOfMeasure: "kom", Price: 10.00, TaxRate: { Percent: 25 } },
       ],
-      IssuedInvoicePayments: [{ PaymentType: { PaymentTypeCode: "K" } }],
-      Note: "Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!",
     };
 
     const invRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices`, {
