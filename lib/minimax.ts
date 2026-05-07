@@ -58,21 +58,22 @@ async function getBusinessPremiseId(orgId: number): Promise<number> {
   return cachedPremiseId!;
 }
 
-// Prix par livraison (abonnement = 2 livraisons/mois)
-// Ligne 1 : povrće OPG (TVA 5%)
-// Ligne 2 : Verdi commission + dostava (TVA 25%)
+// Facture mensuelle = 2 livraisons. Quantity: 2 sur chaque ligne.
+// Taman: 2×€13.50 (5%) + 2×€13.46 (25%) = €62
+// Eko:   2×€18.00 (5%) + 2×€11.48 (25%) = €66.50
+// Super: 2×€19.50 (5%) + 2×€12.02 (25%) = €71
 const PLAN_ROWS: Record<string, Array<{ Description: string; Price: number; VATRate: number }>> = {
   taman: [
     { Description: "Povrće – sezonska košarica Taman (OPG)", Price: 13.50, VATRate: 5 },
-    { Description: "Verdi – dostava i usluga", Price: 13.46, VATRate: 25 },
+    { Description: "Verdi – dostava i usluga Taman", Price: 13.46, VATRate: 25 },
   ],
   eko: [
     { Description: "Ekološko povrće – sezonska košarica Eko (OPG)", Price: 18.00, VATRate: 5 },
-    { Description: "Verdi – dostava i usluga", Price: 11.48, VATRate: 25 },
+    { Description: "Verdi – dostava i usluga Eko", Price: 11.48, VATRate: 25 },
   ],
   super: [
     { Description: "Povrće – sezonska košarica Super (OPG)", Price: 19.50, VATRate: 5 },
-    { Description: "Verdi – dostava i usluga", Price: 12.02, VATRate: 25 },
+    { Description: "Verdi – dostava i usluga Super", Price: 12.02, VATRate: 25 },
   ],
 };
 
@@ -107,7 +108,7 @@ export async function createMinimaxInvoice(params: {
     },
     IssuedInvoiceRows: rows.map(row => ({
       Description: row.Description,
-      Quantity: 1,
+      Quantity: 2,
       UnitOfMeasure: "kom",
       Price: row.Price,
       VATRate: row.VATRate,
