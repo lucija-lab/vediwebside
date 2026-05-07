@@ -27,15 +27,15 @@ export async function GET() {
     const orgsData = await orgsRes.json();
     const orgId = orgsData?.Rows?.[0]?.Organisation?.ID;
 
-    // GET existing invoices to see their structure
-    const listRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices?startRowIndex=0&endRowIndex=1`, {
+    // GET detail of existing invoice to see full structure
+    const detailRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices/10115632`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    const listText = await listRes.text();
-    let listData: any;
-    try { listData = JSON.parse(listText); } catch { listData = listText.substring(0, 1000); }
+    const detailText = await detailRes.text();
+    let detailData: any;
+    try { detailData = JSON.parse(detailText); } catch { detailData = detailText.substring(0, 2000); }
 
-    return NextResponse.json({ orgId, listStatus: listRes.status, listData });
+    return NextResponse.json({ orgId, detailStatus: detailRes.status, detailData });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
