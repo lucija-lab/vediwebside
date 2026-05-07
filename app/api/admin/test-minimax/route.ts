@@ -30,14 +30,16 @@ export async function GET() {
     const today = new Date().toISOString().split("T")[0];
 
     const body = {
-      DateIssued: today,
-      DateTransaction: today,
-      DateDue: today,
+      DateIssued: today + "T00:00:00",
+      DateTransaction: today + "T00:00:00",
+      DateDue: today + "T00:00:00",
       DocumentNumbering: { ID: 62860 },
       AddresseeName: "Test Klijent",
       AddresseeAddress: "Ilica 1",
       AddresseeCity: "Zagreb",
       AddresseeCountry: { ID: 95 },
+      Employee: { ID: 278563 },
+      IssuedInvoiceReportTemplate: { ID: 885995 },
       Note: "Test faktura",
       IssuedInvoiceRows: [
         { Item: { ID: 3668110 }, Quantity: 2, Price: 13.50, VatRate: { ID: 2 } },
