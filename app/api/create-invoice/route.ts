@@ -32,6 +32,14 @@ export async function POST(req: NextRequest) {
   const email = customer?.email ?? session.customer_details?.email ?? "";
   const address = customer?.address ?? session.customer_details?.address;
 
+  // Send confirmation email regardless of Minimax
+  if (email) {
+    const firstName = name.split(" ")[0];
+    sendOrderConfirmationEmail(email, firstName, plan).catch(err =>
+      console.error("Email confirmation error:", err.message)
+    );
+  }
+
   try {
     const invoice = await createMinimaxInvoice({
       customerName: name,
@@ -40,18 +48,9 @@ export async function POST(req: NextRequest) {
       customerEmail: email,
       plan,
     });
-
-    // Envoyer email de confirmation en croate
-    if (email) {
-      const firstName = name.split(" ")[0];
-      sendOrderConfirmationEmail(email, firstName, plan).catch(err =>
-        console.error("Email confirmation error:", err.message)
-      );
-    }
-
     return NextResponse.json({ ok: true, invoiceId: invoice?.Id ?? invoice?.id });
   } catch (err: any) {
     console.error("MiniMax invoice error:", err.message);
-    return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
+    return NextResponse.json({ ok: true, minimaxError: err.message });
   }
 }
