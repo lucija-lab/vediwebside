@@ -4,7 +4,7 @@ import { getRedis } from "@/lib/redis";
 
 const KEEP_EMAILS = ["lucija@verdihrvatska.com", "marijo.valetic@gmail.com"];
 
-export async function POST() {
+export async function GET() {
   const users = await getUsers();
   const kept = users.filter(u => KEEP_EMAILS.includes(u.email.toLowerCase()));
   await saveUsers(kept);
