@@ -18,7 +18,7 @@ async function getToken(): Promise<string> {
       password: process.env.MINIMAX_PASSWORD!,
       client_id: process.env.MINIMAX_CLIENT_ID!,
       client_secret: process.env.MINIMAX_CLIENT_SECRET!,
-      scope: "minimax",
+      scope: "profile",
     }),
   });
 
