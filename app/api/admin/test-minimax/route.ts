@@ -27,14 +27,36 @@ export async function GET() {
     const orgsData = await orgsRes.json();
     const orgId = orgsData?.Rows?.[0]?.Organisation?.ID;
 
-    const premRes = await fetch(`${BASE}/api/orgs/${orgId}/businesspremises`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const premText = await premRes.text();
-    let premData: any;
-    try { premData = JSON.parse(premText); } catch { premData = premText.substring(0, 200); }
+    // Try creating invoice directly without BusinessPremise lookup
+    const invoiceBody = {
+      DocumentDate: new Date().toISOString().split("T")[0],
+      DueDate: new Date().toISOString().split("T")[0],
+      Customer: {
+        Name: "Test Klijent",
+        Address: "Testna ulica 1",
+        City: "Zagreb",
+        CountryCode: "HR",
+        Email: "lucija@verdihrvatska.com",
+        CustomerCode: "02",
+      },
+      IssuedInvoiceRows: [
+        { Description: "Povrće – Taman košarica", Quantity: 2, UnitOfMeasure: "kom", Price: 13.50, VATRate: 5 },
+        { Description: "Verdi – dostava i usluga", Quantity: 2, UnitOfMeasure: "kom", Price: 13.46, VATRate: 25 },
+      ],
+      IssuedInvoicePayments: [{ PaymentType: { PaymentTypeCode: "K" } }],
+      Note: "Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!",
+    };
 
-    return NextResponse.json({ orgId, premStatus: premRes.status, premData });
+    const invRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(invoiceBody),
+    });
+    const invText = await invRes.text();
+    let invData: any;
+    try { invData = JSON.parse(invText); } catch { invData = invText.substring(0, 500); }
+
+    return NextResponse.json({ orgId, invStatus: invRes.status, invData });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
