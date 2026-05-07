@@ -27,26 +27,50 @@ export async function GET() {
     const orgsData = await orgsRes.json();
     const orgId = orgsData?.Rows?.[0]?.Organisation?.ID;
 
-    // GET les 5 dernières factures pour voir la structure
-    const listRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices?pageSize=5&page=1&orderBy=DateIssued+desc`, {
+    // GET les numérotations disponibles
+    const numRes = await fetch(`${BASE}/api/orgs/${orgId}/document-numbering`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    const listText = await listRes.text();
-    let listData: any;
-    try { listData = JSON.parse(listText); } catch { listData = listText.substring(0, 3000); }
+    const numText = await numRes.text();
+    let numData: any;
+    try { numData = JSON.parse(numText); } catch { numData = numText.substring(0, 2000); }
 
-    // GET le détail de la facture la plus récente
-    const lastId = listData?.Rows?.[0]?.IssuedInvoiceId;
-    let lastDetail: any = null;
-    if (lastId) {
-      const detRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices/${lastId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const detText = await detRes.text();
-      try { lastDetail = JSON.parse(detText); } catch { lastDetail = detText.substring(0, 3000); }
-    }
+    const today = new Date().toISOString().split("T")[0];
 
-    return NextResponse.json({ orgId, lastId, listStatus: listRes.status, lastDetail });
+    // POST avec Currency + Analytic
+    const body = {
+      DateIssued: today + "T00:00:00",
+      DateTransaction: today + "T00:00:00",
+      DateDue: today + "T00:00:00",
+      DocumentNumbering: { ID: 62860 },
+      AddresseeName: "Test Klijent",
+      AddresseeAddress: "Ilica 1",
+      AddresseeCity: "Zagreb",
+      AddresseeCountry: { ID: 95 },
+      Currency: { ID: 7 },
+      Analytic: { ID: 61896 },
+      Employee: { ID: 278563 },
+      IssuedInvoiceReportTemplate: { ID: 885995 },
+      Note: "Test faktura",
+      IssuedInvoiceRows: [
+        { Item: { ID: 3668110 }, Quantity: 2, Price: 13.50, VatRate: { ID: 2 } },
+        { Item: { ID: 3668111 }, Quantity: 2, Price: 13.46, VatRate: { ID: 1 } },
+      ],
+      IssuedInvoicePaymentMethods: [
+        { PaymentMethod: { ID: 207944 } },
+      ],
+    };
+
+    const postRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const postText = await postRes.text();
+    let postData: any;
+    try { postData = JSON.parse(postText); } catch { postData = postText.substring(0, 2000); }
+
+    return NextResponse.json({ orgId, numStatus: numRes.status, numData, postStatus: postRes.status, postData });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
