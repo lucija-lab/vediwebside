@@ -31,7 +31,7 @@ async function getToken(): Promise<string> {
 async function getOrgId(): Promise<number> {
   if (cachedOrgId) return cachedOrgId;
   const token = await getToken();
-  const res = await fetch(`${BASE}/api/orgs/allOrgs?startRowIndex=0&endRowIndex=1`, {
+  const res = await fetch(`${BASE}/api/currentuser/orgs`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error(`MiniMax orgs error: ${res.status}`);
