@@ -10,7 +10,7 @@ export async function GET() {
     if (idx >= 0) {
       users[idx] = { ...users[idx], ...fields };
     } else {
-      users.push({ id: randomBytes(12).toString("hex"), email, createdAt: new Date().toISOString(), phone: "", address: "", city: "", ...fields } as any);
+      users.push({ id: randomBytes(12).toString("hex"), email, createdAt: new Date().toISOString(), phone: "", address: "", city: "", firstName: "", lastName: "", passwordHash: "", role: "client", ...fields } as any);
     }
   };
 
