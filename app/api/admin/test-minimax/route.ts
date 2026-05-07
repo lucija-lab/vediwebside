@@ -43,11 +43,10 @@ export async function GET() {
 
     const today = new Date().toISOString().split("T")[0];
 
-    // POST minimaliste — juste ce qui est strictement nécessaire
-    const body = {
+    // Test A: sans DocumentNumbering (Minimax choisit le défaut)
+    const body: any = {
       DateIssued: today,
       DateDue: today,
-      DocumentNumbering: { ID: 65500 },
       AddresseeName: "Test Klijent",
       IssuedInvoiceRows: [
         { Item: { ID: 3668110 }, Quantity: 2, Price: 13.50, VatRate: { ID: 2 } },
