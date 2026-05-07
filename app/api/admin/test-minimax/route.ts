@@ -43,6 +43,7 @@ export async function GET() {
 
     const today = new Date().toISOString().split("T")[0];
 
+    // Test sans Item ID — juste description + prix
     const body: any = {
       DateIssued: today + "T00:00:00",
       DateTransaction: today + "T00:00:00",
@@ -55,11 +56,8 @@ export async function GET() {
       Currency: { ID: 7 },
       ExchangeRate: 1,
       IssuedInvoiceRows: [
-        { Item: { ID: 3668110 }, Quantity: 2, Price: 13.50, VatRate: { ID: 2 } },
-        { Item: { ID: 3668111 }, Quantity: 2, Price: 13.46, VatRate: { ID: 1 } },
-      ],
-      IssuedInvoicePaymentMethods: [
-        { PaymentMethod: { ID: 207944 } },
+        { ItemName: "Verdi Taman Košarica", Quantity: 2, Price: 13.50, VatRate: { ID: 2 } },
+        { ItemName: "Verdi Taman Usluga", Quantity: 2, Price: 13.46, VatRate: { ID: 1 } },
       ],
     };
 
