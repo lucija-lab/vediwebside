@@ -1,28 +1,34 @@
 import { NextResponse } from "next/server";
 import { getUsers, saveUsers, hashPassword } from "@/lib/auth";
+import { randomBytes } from "crypto";
 
 export async function GET() {
   const users = await getUsers();
 
-  const lucija = users.find(u => u.email.toLowerCase() === "lucija@verdihrvatska.com");
-  const marijo = users.find(u => u.email.toLowerCase() === "marijo.valetic@gmail.com");
+  const upsert = (email: string, fields: object) => {
+    const idx = users.findIndex(u => u.email.toLowerCase() === email.toLowerCase());
+    if (idx >= 0) {
+      users[idx] = { ...users[idx], ...fields };
+    } else {
+      users.push({ id: randomBytes(12).toString("hex"), email, createdAt: new Date().toISOString(), phone: "", address: "", city: "", ...fields } as any);
+    }
+  };
 
-  if (lucija) {
-    lucija.role = "admin";
-    lucija.passwordHash = hashPassword("kinkyinky098!");
-  }
-  if (marijo) {
-    marijo.role = "livreur";
-    marijo.passwordHash = hashPassword("MarijoVerdi061");
-  }
+  upsert("lucija@verdihrvatska.com", {
+    firstName: "Lucija",
+    lastName: "Verdi",
+    role: "admin",
+    passwordHash: hashPassword("kinkyinky098!"),
+  });
+
+  upsert("marijo.valetic@gmail.com", {
+    firstName: "Marijo",
+    lastName: "Valetić",
+    role: "livreur",
+    passwordHash: hashPassword("MarijoVerdi061"),
+  });
 
   await saveUsers(users);
 
-  return NextResponse.json({
-    ok: true,
-    accounts: [
-      { email: "lucija@verdihrvatska.com", role: "admin", found: !!lucija },
-      { email: "marijo.valetic@gmail.com", role: "livreur", found: !!marijo },
-    ],
-  });
+  return NextResponse.json({ ok: true });
 }
