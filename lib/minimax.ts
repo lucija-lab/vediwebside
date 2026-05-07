@@ -81,7 +81,7 @@ export async function createMinimaxInvoice(params: {
     AddresseeName: params.customerName,
     AddresseeAddress: params.customerAddress,
     AddresseeCity: params.customerCity,
-    AddresseeCountryCode: "HR",
+    AddresseeCountry: { ID: 95 },
     Note: "Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!",
     IssuedInvoiceRows: rows.map(row => ({
       Item: { ID: row.itemId },
@@ -89,8 +89,8 @@ export async function createMinimaxInvoice(params: {
       Price: row.price,
       VatRate: { ID: row.vatRateId },
     })),
-    IssuedInvoicePayments: [
-      { PaymentType: { PaymentTypeCode: "K" } },
+    IssuedInvoicePaymentMethods: [
+      { PaymentMethod: { ID: 207944 } },
     ],
   };
 

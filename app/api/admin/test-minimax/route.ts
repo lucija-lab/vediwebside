@@ -37,14 +37,14 @@ export async function GET() {
       AddresseeName: "Test Klijent",
       AddresseeAddress: "Ilica 1",
       AddresseeCity: "Zagreb",
-      AddresseeCountryCode: "HR",
+      AddresseeCountry: { ID: 95 },
       Note: "Test faktura",
       IssuedInvoiceRows: [
         { Item: { ID: 3668110 }, Quantity: 2, Price: 13.50, VatRate: { ID: 2 } },
         { Item: { ID: 3668111 }, Quantity: 2, Price: 13.46, VatRate: { ID: 1 } },
       ],
-      IssuedInvoicePayments: [
-        { PaymentType: { PaymentTypeCode: "K" } },
+      IssuedInvoicePaymentMethods: [
+        { PaymentMethod: { ID: 207944 } },
       ],
     };
 
