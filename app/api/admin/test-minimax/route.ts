@@ -27,15 +27,41 @@ export async function GET() {
     const orgsData = await orgsRes.json();
     const orgId = orgsData?.Rows?.[0]?.Organisation?.ID;
 
-    // GET detail of existing invoice to see full structure
-    const detailRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices/10115632`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const detailText = await detailRes.text();
-    let detailData: any;
-    try { detailData = JSON.parse(detailText); } catch { detailData = detailText.substring(0, 2000); }
+    const today = new Date().toISOString().split("T")[0];
 
-    return NextResponse.json({ orgId, detailStatus: detailRes.status, detailData });
+    const body = {
+      DateIssued: today,
+      DateTransaction: today,
+      DateDue: today,
+      DocumentNumbering: { ID: 62860 },
+      AddresseeName: "Test Klijent",
+      AddresseeAddress: "Ilica 1",
+      AddresseeCity: "Zagreb",
+      AddresseeCountryCode: "HR",
+      Note: "Test faktura",
+      IssuedInvoiceRows: [
+        { Item: { ID: 3668110 }, Quantity: 2, Price: 13.50, VatRate: { ID: 2 } },
+        { Item: { ID: 3668111 }, Quantity: 2, Price: 13.46, VatRate: { ID: 1 } },
+      ],
+      IssuedInvoicePayments: [
+        { PaymentType: { PaymentTypeCode: "K" } },
+      ],
+    };
+
+    const postRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    const postText = await postRes.text();
+    let postData: any;
+    try { postData = JSON.parse(postText); } catch { postData = postText.substring(0, 3000); }
+
+    return NextResponse.json({ orgId, postStatus: postRes.status, postData, bodySent: body });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
