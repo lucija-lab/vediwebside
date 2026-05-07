@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken, getUsers } from "@/lib/auth";
 import { getDeliveries, updateDelivery, createDelivery } from "@/lib/deliveries";
-import { getSubscriptions } from "@/lib/subscriptions";
 import { createMinimaxInvoice } from "@/lib/minimax";
 import { sendInvoiceEmail } from "@/lib/email";
 import { randomBytes } from "crypto";
@@ -86,23 +85,21 @@ export async function PATCH(req: NextRequest) {
     ).length;
 
     if (deliveredCount % 2 === 0) {
-      const subs = await getSubscriptions();
-      const sub = subs.find(s => s.userId === delivery.userId && s.status === "active");
       const client = users.find(u => u.id === delivery.userId);
-      if (client && sub) {
+      if (client) {
         createMinimaxInvoice({
           customerName: `${client.firstName} ${client.lastName}`,
           customerAddress: client.address,
           customerCity: client.city,
           customerEmail: client.email,
-          plan: sub.plan,
+          plan: delivery.plan,
           deliveryDate: delivery.scheduledDate,
         }).then(invoice => {
           const invoiceNumber = invoice?.InvoiceNumber ?? invoice?.invoiceNumber ?? "—";
           sendInvoiceEmail(
             client.email,
             client.firstName,
-            sub.plan,
+            delivery.plan,
             String(invoiceNumber),
             delivery.scheduledDate,
           ).catch(err => console.error("Invoice email error:", err.message));
