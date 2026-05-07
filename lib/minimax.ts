@@ -94,6 +94,10 @@ export async function createMinimaxInvoice(params: {
   const body = {
     DocumentDate: today,
     DueDate: today,
+    DeliveryDate: params.deliveryDate ?? today,
+    DeliveryMethod: "Dostava na adresu",
+    DeliveryPremise: "verdi webshop, Zagreb",
+    Note: "Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!",
     // Fiskalizacija: poslovni prostor "01", uređaj "02"
     BusinessPremise: { BusinessPremiseID: premiseId },
     ElectronicDevice: { ElectronicDeviceCode: "02" },
@@ -103,7 +107,6 @@ export async function createMinimaxInvoice(params: {
       City: params.customerCity,
       CountryCode: "HR",
       Email: params.customerEmail,
-      // B2C — pas d'OIB requis
       CustomerCode: "02",
     },
     IssuedInvoiceRows: rows.map(row => ({
@@ -113,7 +116,6 @@ export async function createMinimaxInvoice(params: {
       Price: row.Price,
       VATRate: row.VATRate,
     })),
-    // Paiement par carte (Stripe)
     IssuedInvoicePayments: [
       { PaymentType: { PaymentTypeCode: "K" } },
     ],
