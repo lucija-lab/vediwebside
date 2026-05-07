@@ -33,31 +33,34 @@ export async function GET() {
     });
     await numRes.text();
 
-    // GET méthodes de paiement disponibles
-    const pmRes = await fetch(`${BASE}/api/orgs/${orgId}/paymentmethod`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const pmText = await pmRes.text();
-    let pmData: any;
-    try { pmData = JSON.parse(pmText); } catch { pmData = pmText.substring(0, 1000); }
-
     const today = new Date().toISOString().split("T")[0];
+    const dt = today + "T00:00:00";
 
-    // Test sans Item ID — juste description + prix
     const body: any = {
-      DateIssued: today + "T00:00:00",
-      DateTransaction: today + "T00:00:00",
-      DateDue: today + "T00:00:00",
+      InvoiceType: "R",
       DocumentNumbering: { ID: 65500 },
+      Customer: { ID: 4334537 },
+      DateIssued: dt,
+      DateTransaction: dt,
+      DateTransactionFrom: dt,
+      DateDue: dt,
       AddresseeName: "Test Klijent",
       AddresseeAddress: "Ilica 1",
+      AddresseePostalCode: "10000",
       AddresseeCity: "Zagreb",
       AddresseeCountry: { ID: 95 },
       Currency: { ID: 7 },
       ExchangeRate: 1,
+      IssuedInvoiceReportTemplate: { ID: 885995 },
+      DeliveryNoteReportTemplate: { ID: 770988 },
+      PricesOnInvoice: "N",
+      RecurringInvoice: "N",
       IssuedInvoiceRows: [
-        { ItemName: "Verdi Taman Košarica", Quantity: 2, Price: 13.50, VatRate: { ID: 2 } },
-        { ItemName: "Verdi Taman Usluga", Quantity: 2, Price: 13.46, VatRate: { ID: 1 } },
+        { RowNumber: 1, Item: { ID: 3668110 }, ItemName: "Verdi Taman Košarica", Quantity: 2, Price: 13.50, VatRate: { ID: 2 }, Discount: 0, DiscountPercent: 0 },
+        { RowNumber: 2, Item: { ID: 3668111 }, ItemName: "Verdi Taman Usluga", Quantity: 2, Price: 13.46, VatRate: { ID: 1 }, Discount: 0, DiscountPercent: 0 },
+      ],
+      IssuedInvoicePaymentMethods: [
+        { RowNumber: 1, PaymentMethod: { ID: 207944 }, Amount: 53.92, AmountInDomesticCurrency: 53.92, AlreadyPaid: "N" },
       ],
     };
 
@@ -70,7 +73,7 @@ export async function GET() {
     let postData: any;
     try { postData = JSON.parse(postText); } catch { postData = postText.substring(0, 2000); }
 
-    return NextResponse.json({ orgId, pmStatus: pmRes.status, pmData, postStatus: postRes.status, postData, bodySent: body });
+    return NextResponse.json({ orgId, postStatus: postRes.status, postData, bodySent: body });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
