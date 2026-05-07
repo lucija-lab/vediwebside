@@ -27,27 +27,15 @@ export async function GET() {
     const orgsData = await orgsRes.json();
     const orgId = orgsData?.Rows?.[0]?.Organisation?.ID;
 
-    // Minimal invoice body to find what works
-    const invoiceBody = {
-      DocumentDate: new Date().toISOString().split("T")[0],
-      Customer: {
-        Name: "Test Klijent",
-      },
-      IssuedInvoiceRows: [
-        { Description: "Test usluga", Quantity: 1, UnitOfMeasure: "kom", Price: 10.00, TaxRate: { Percent: 25 } },
-      ],
-    };
-
-    const invRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
-      body: JSON.stringify(invoiceBody),
+    // GET existing invoices to see their structure
+    const listRes = await fetch(`${BASE}/api/orgs/${orgId}/issuedinvoices?startRowIndex=0&endRowIndex=1`, {
+      headers: { Authorization: `Bearer ${token}` },
     });
-    const invText = await invRes.text();
-    let invData: any;
-    try { invData = JSON.parse(invText); } catch { invData = invText.substring(0, 1000); }
+    const listText = await listRes.text();
+    let listData: any;
+    try { listData = JSON.parse(listText); } catch { listData = listText.substring(0, 1000); }
 
-    return NextResponse.json({ orgId, invStatus: invRes.status, invData, sentBody: invoiceBody });
+    return NextResponse.json({ orgId, listStatus: listRes.status, listData });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
