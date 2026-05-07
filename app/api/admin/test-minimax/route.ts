@@ -54,9 +54,9 @@ export async function GET() {
     });
     const invText = await invRes.text();
     let invData: any;
-    try { invData = JSON.parse(invText); } catch { invData = invText.substring(0, 500); }
+    try { invData = JSON.parse(invText); } catch { invData = invText.substring(0, 1000); }
 
-    return NextResponse.json({ orgId, invStatus: invRes.status, invData });
+    return NextResponse.json({ orgId, invStatus: invRes.status, invData, sentBody: invoiceBody });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
