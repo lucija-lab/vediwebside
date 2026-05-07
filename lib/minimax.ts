@@ -1,5 +1,5 @@
 const BASE = "https://moj.minimax.hr/HR/API";
-const TOKEN_URL = "https://moj.minimax.hr/Token";
+const TOKEN_URL = "https://moj.minimax.hr/HR/AUT/oauth20/token";
 
 
 let cachedToken: { token: string; expires: number } | null = null;
