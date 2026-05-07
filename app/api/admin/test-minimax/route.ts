@@ -43,14 +43,23 @@ export async function GET() {
 
     const today = new Date().toISOString().split("T")[0];
 
-    // Test A: sans DocumentNumbering (Minimax choisit le défaut)
     const body: any = {
-      DateIssued: today,
-      DateDue: today,
+      DateIssued: today + "T00:00:00",
+      DateTransaction: today + "T00:00:00",
+      DateDue: today + "T00:00:00",
+      DocumentNumbering: { ID: 65500 },
       AddresseeName: "Test Klijent",
+      AddresseeAddress: "Ilica 1",
+      AddresseeCity: "Zagreb",
+      AddresseeCountry: { ID: 95 },
+      Currency: { ID: 7 },
+      ExchangeRate: 1,
       IssuedInvoiceRows: [
         { Item: { ID: 3668110 }, Quantity: 2, Price: 13.50, VatRate: { ID: 2 } },
         { Item: { ID: 3668111 }, Quantity: 2, Price: 13.46, VatRate: { ID: 1 } },
+      ],
+      IssuedInvoicePaymentMethods: [
+        { PaymentMethod: { ID: 207944 } },
       ],
     };
 
