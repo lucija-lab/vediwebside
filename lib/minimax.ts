@@ -38,7 +38,7 @@ async function getOrgId(): Promise<number> {
   const data = await res.json();
   const org = data?.Rows?.[0] ?? data?.[0];
   if (!org) throw new Error("No MiniMax organisation found");
-  cachedOrgId = org.OrganisationId ?? org.organisationId;
+  cachedOrgId = org.Organisation?.ID ?? org.OrganisationId ?? org.organisationId;
   return cachedOrgId!;
 }
 

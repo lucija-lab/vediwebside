@@ -25,8 +25,14 @@ export async function GET() {
       headers: { Authorization: `Bearer ${token}` },
     });
     const orgsData = await orgsRes.json();
+    const orgId = orgsData?.Rows?.[0]?.Organisation?.ID;
 
-    return NextResponse.json({ step: "orgs", status: orgsRes.status, data: orgsData });
+    const premRes = await fetch(`${BASE}/api/orgs/${orgId}/businesspremises`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const premData = await premRes.json();
+
+    return NextResponse.json({ orgId, premStatus: premRes.status, premData });
   } catch (err: any) {
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
   }
