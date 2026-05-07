@@ -45,7 +45,7 @@ async function getOrgId(): Promise<number> {
 async function getBusinessPremiseId(orgId: number): Promise<number> {
   if (cachedPremiseId) return cachedPremiseId;
   const token = await getToken();
-  const res = await fetch(`${BASE}/api/orgs/${orgId}/businesspremises`, {
+  const res = await fetch(`${BASE}/api/orgs/${orgId}/issuedInvoices/businesspremises`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   if (!res.ok) throw new Error(`MiniMax business premises error: ${res.status}`);
