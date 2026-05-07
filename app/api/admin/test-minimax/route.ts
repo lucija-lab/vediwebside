@@ -56,8 +56,8 @@ export async function GET() {
       PricesOnInvoice: "N",
       RecurringInvoice: "N",
       IssuedInvoiceRows: [
-        { RowNumber: 1, Item: { ID: 3668110 }, ItemName: "Verdi Taman Košarica", Quantity: 2, Price: 13.50, VatRate: { ID: 2 }, Discount: 0, DiscountPercent: 0 },
-        { RowNumber: 2, Item: { ID: 3668111 }, ItemName: "Verdi Taman Usluga", Quantity: 2, Price: 13.46, VatRate: { ID: 1 }, Discount: 0, DiscountPercent: 0 },
+        { RowNumber: 1, Item: { ID: 3668110 }, ItemName: "Verdi Taman Košarica", Quantity: 2, Price: 13.50, VatRate: { ID: 2 }, VATPercent: 5, Discount: 0, DiscountPercent: 0 },
+        { RowNumber: 2, Item: { ID: 3668111 }, ItemName: "Verdi Taman Usluga", Quantity: 2, Price: 13.46, VatRate: { ID: 1 }, VATPercent: 25, Discount: 0, DiscountPercent: 0 },
       ],
       IssuedInvoicePaymentMethods: [
         { RowNumber: 1, PaymentMethod: { ID: 207944 }, Amount: 53.92, AmountInDomesticCurrency: 53.92, AlreadyPaid: "N" },

@@ -1,7 +1,6 @@
 const BASE = "https://moj.minimax.hr/HR/API";
 const TOKEN_URL = "https://moj.minimax.hr/HR/AUT/oauth20/token";
 
-
 let cachedToken: { token: string; expires: number } | null = null;
 let cachedOrgId: number | null = null;
 
@@ -41,22 +40,21 @@ async function getOrgId(): Promise<number> {
   return cachedOrgId!;
 }
 
-
-// Item IDs from Minimax catalogue (discovered from existing invoice)
-// VatRate ID 1 = 25% (S), VatRate ID 2 = 5% (0)
-// DocumentNumbering ID: 62860
-const PLAN_ROWS: Record<string, Array<{ itemId: number; price: number; vatRateId: number }>> = {
+// VatRate ID 1 = 25% (S), VatRate ID 2 = 5% (code "0" dans Minimax)
+// DocumentNumbering 65500 = "Verdi shop" (défaut B2C)
+// Customer 4334537 = client générique pour B2C webshop
+const PLAN_ROWS: Record<string, Array<{ itemId: number; price: number; vatRateId: number; vatPercent: number }>> = {
   taman: [
-    { itemId: 3668110, price: 13.50, vatRateId: 2 }, // Taman Košarica (OPG) 5%
-    { itemId: 3668111, price: 13.46, vatRateId: 1 }, // Taman Usluga (Verdi) 25%
+    { itemId: 3668110, price: 13.50, vatRateId: 2, vatPercent: 5 },
+    { itemId: 3668111, price: 13.46, vatRateId: 1, vatPercent: 25 },
   ],
   eko: [
-    { itemId: 3671799, price: 18.00, vatRateId: 2 }, // Eko Košarica (OPG) 5%
-    { itemId: 3671800, price: 11.48, vatRateId: 1 }, // Eko Usluga (Verdi) 25%
+    { itemId: 3671799, price: 18.00, vatRateId: 2, vatPercent: 5 },
+    { itemId: 3671800, price: 11.48, vatRateId: 1, vatPercent: 25 },
   ],
   super: [
-    { itemId: 3668105, price: 19.50, vatRateId: 2 }, // Super Košarica (OPG) 5%
-    { itemId: 3668106, price: 12.02, vatRateId: 1 }, // Super Usluga (Verdi) 25%
+    { itemId: 3668105, price: 19.50, vatRateId: 2, vatPercent: 5 },
+    { itemId: 3668106, price: 12.02, vatRateId: 1, vatPercent: 25 },
   ],
 };
 
@@ -71,30 +69,47 @@ export async function createMinimaxInvoice(params: {
   const token = await getToken();
   const orgId = await getOrgId();
   const today = params.deliveryDate ?? new Date().toISOString().split("T")[0];
+  const dt = today + "T00:00:00";
   const rows = PLAN_ROWS[params.plan] ?? PLAN_ROWS.taman;
 
+  const totalAmount = rows.reduce((sum, row) => {
+    const ht = row.price * 2;
+    const tva = ht * row.vatPercent / 100;
+    return sum + ht + tva;
+  }, 0);
+
   const body: any = {
-    DateIssued: today,
-    DateTransaction: today,
-    DateDue: today,
+    InvoiceType: "R",
     DocumentNumbering: { ID: 65500 },
+    Customer: { ID: 4334537 },
+    DateIssued: dt,
+    DateTransaction: dt,
+    DateTransactionFrom: dt,
+    DateDue: dt,
     AddresseeName: params.customerName,
     AddresseeAddress: params.customerAddress,
+    AddresseePostalCode: "",
     AddresseeCity: params.customerCity,
     AddresseeCountry: { ID: 95 },
     Currency: { ID: 7 },
-    Analytic: { ID: 61896 },
-    Employee: { ID: 278563 },
+    ExchangeRate: 1,
     IssuedInvoiceReportTemplate: { ID: 885995 },
+    DeliveryNoteReportTemplate: { ID: 770988 },
+    PricesOnInvoice: "N",
+    RecurringInvoice: "N",
     Note: "Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!",
-    IssuedInvoiceRows: rows.map(row => ({
+    IssuedInvoiceRows: rows.map((row, i) => ({
+      RowNumber: i + 1,
       Item: { ID: row.itemId },
       Quantity: 2,
       Price: row.price,
       VatRate: { ID: row.vatRateId },
+      VATPercent: row.vatPercent,
+      Discount: 0,
+      DiscountPercent: 0,
     })),
     IssuedInvoicePaymentMethods: [
-      { PaymentMethod: { ID: 207944 } },
+      { RowNumber: 1, PaymentMethod: { ID: 207944 }, Amount: Math.round(totalAmount * 100) / 100, AmountInDomesticCurrency: Math.round(totalAmount * 100) / 100, AlreadyPaid: "N" },
     ],
   };
 
