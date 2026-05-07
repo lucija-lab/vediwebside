@@ -3,6 +3,7 @@ import { verifyToken, getUsers } from "@/lib/auth";
 import { getDeliveries, updateDelivery, createDelivery } from "@/lib/deliveries";
 import { getSubscriptions } from "@/lib/subscriptions";
 import { createMinimaxInvoice } from "@/lib/minimax";
+import { sendInvoiceEmail } from "@/lib/email";
 import { randomBytes } from "crypto";
 
 export async function GET(req: NextRequest) {
@@ -77,20 +78,36 @@ export async function PATCH(req: NextRequest) {
 
   const ok = await updateDelivery(id, updates);
 
-  // Facture Minimax à la livraison
+  // Facture Minimax à la 2ème livraison
   if (updates.status === "delivered" && delivery.status !== "delivered") {
-    const subs = await getSubscriptions();
-    const sub = subs.find(s => s.userId === delivery.userId && s.status === "active");
-    const client = users.find(u => u.id === delivery.userId);
-    if (client && sub) {
-      createMinimaxInvoice({
-        customerName: `${client.firstName} ${client.lastName}`,
-        customerAddress: client.address,
-        customerCity: client.city,
-        customerEmail: client.email,
-        plan: sub.plan,
-        deliveryDate: delivery.scheduledDate,
-      }).catch(err => console.error("Minimax invoice error:", err.message));
+    const allDeliveries = await getDeliveries();
+    const deliveredCount = allDeliveries.filter(
+      d => d.userId === delivery.userId && d.status === "delivered" && d.id !== id
+    ).length;
+
+    if (deliveredCount === 1) {
+      const subs = await getSubscriptions();
+      const sub = subs.find(s => s.userId === delivery.userId && s.status === "active");
+      const client = users.find(u => u.id === delivery.userId);
+      if (client && sub) {
+        createMinimaxInvoice({
+          customerName: `${client.firstName} ${client.lastName}`,
+          customerAddress: client.address,
+          customerCity: client.city,
+          customerEmail: client.email,
+          plan: sub.plan,
+          deliveryDate: delivery.scheduledDate,
+        }).then(invoice => {
+          const invoiceNumber = invoice?.InvoiceNumber ?? invoice?.invoiceNumber ?? "—";
+          sendInvoiceEmail(
+            client.email,
+            client.firstName,
+            sub.plan,
+            String(invoiceNumber),
+            delivery.scheduledDate,
+          ).catch(err => console.error("Invoice email error:", err.message));
+        }).catch(err => console.error("Minimax invoice error:", err.message));
+      }
     }
   }
 
