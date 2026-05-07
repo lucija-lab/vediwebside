@@ -30,7 +30,9 @@ export async function GET() {
     const premRes = await fetch(`${BASE}/api/orgs/${orgId}/businesspremises`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    const premData = await premRes.json();
+    const premText = await premRes.text();
+    let premData: any;
+    try { premData = JSON.parse(premText); } catch { premData = premText.substring(0, 200); }
 
     return NextResponse.json({ orgId, premStatus: premRes.status, premData });
   } catch (err: any) {
