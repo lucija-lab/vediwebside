@@ -42,22 +42,29 @@ async function getOrgId(): Promise<number> {
   return cachedOrgId!;
 }
 
-async function getBusinessPremiseId(orgId: number): Promise<number> {
+async function getBusinessPremiseId(orgId: number): Promise<number | null> {
   if (cachedPremiseId) return cachedPremiseId;
   const token = await getToken();
-  const res = await fetch(`${BASE}/api/orgs/${orgId}/issuedInvoices/businesspremises`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  if (!res.ok) throw new Error(`MiniMax business premises error: ${res.status}`);
-  const data = await res.json();
-  const list: any[] = data?.Rows ?? data ?? [];
-  // Oznaka poslovnog prostora = "01" (Verdi shop)
-  const premise = list.find(p =>
-    p.BusinessPremiseCode === "01" || p.Code === "01" || p.Oznaka === "01"
-  );
-  if (!premise) throw new Error("Business premise 01 not found in MiniMax");
-  cachedPremiseId = premise.BusinessPremiseID ?? premise.Id ?? premise.id;
-  return cachedPremiseId!;
+  // Try multiple known endpoint paths
+  const paths = [
+    `${BASE}/api/orgs/${orgId}/businesspremises`,
+    `${BASE}/api/orgs/${orgId}/issuedInvoices/businesspremises`,
+    `${BASE}/api/orgs/${orgId}/Settings/IssuedInvoiceBusinessPremises`,
+  ];
+  for (const path of paths) {
+    const res = await fetch(path, { headers: { Authorization: `Bearer ${token}` } });
+    if (!res.ok) continue;
+    const data = await res.json();
+    const list: any[] = data?.Rows ?? data ?? [];
+    const premise = list.find(p =>
+      p.BusinessPremiseCode === "01" || p.Code === "01" || p.Oznaka === "01"
+    );
+    if (premise) {
+      cachedPremiseId = premise.BusinessPremiseID ?? premise.Id ?? premise.id;
+      return cachedPremiseId!;
+    }
+  }
+  return null;
 }
 
 // Facture mensuelle = 2 livraisons. Quantity: 2 sur chaque ligne.
@@ -93,7 +100,7 @@ export async function createMinimaxInvoice(params: {
   const today = params.deliveryDate ?? new Date().toISOString().split("T")[0];
   const rows = PLAN_ROWS[params.plan] ?? PLAN_ROWS.taman;
 
-  const body = {
+  const body: any = {
     DocumentDate: today,
     DueDate: today,
     DeliveryDate: params.deliveryDate ?? today,
@@ -101,7 +108,7 @@ export async function createMinimaxInvoice(params: {
     DeliveryPremise: "verdi webshop, Zagreb",
     Note: "Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!",
     // Fiskalizacija: poslovni prostor "01", uređaj "02"
-    BusinessPremise: { BusinessPremiseID: premiseId },
+    ...(premiseId ? { BusinessPremise: { BusinessPremiseID: premiseId } } : { BusinessPremise: { BusinessPremiseCode: "01" } }),
     ElectronicDevice: { ElectronicDeviceCode: "02" },
     Customer: {
       Name: params.customerName,
