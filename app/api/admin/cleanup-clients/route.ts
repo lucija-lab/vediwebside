@@ -3,7 +3,7 @@ import { getUsers, saveUsers } from "@/lib/auth";
 import { getSubscriptions, saveSubscriptions } from "@/lib/subscriptions";
 import { getDeliveries, saveDeliveries } from "@/lib/deliveries";
 
-export async function DELETE() {
+export async function GET() {
   const users = await getUsers();
   const clients = users.filter(u => u.role === "client");
   const clientIds = new Set(clients.map(u => u.id));
