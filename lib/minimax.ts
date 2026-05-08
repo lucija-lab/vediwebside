@@ -45,16 +45,16 @@ async function getOrgId(): Promise<number> {
 // Customer 4334537 = client générique pour B2C webshop
 const PLAN_ROWS: Record<string, Array<{ itemId: number; price: number; vatRateId: number; vatPercent: number }>> = {
   taman: [
-    { itemId: 3668110, price: 13.50, vatRateId: 2, vatPercent: 5 },
-    { itemId: 3668111, price: 13.46, vatRateId: 1, vatPercent: 25 },
+    { itemId: 3774045, price: 13.50, vatRateId: 2, vatPercent: 5 },
+    { itemId: 3774050, price: 13.46, vatRateId: 1, vatPercent: 25 },
   ],
   eko: [
-    { itemId: 3671799, price: 18.00, vatRateId: 2, vatPercent: 5 },
-    { itemId: 3671800, price: 11.48, vatRateId: 1, vatPercent: 25 },
+    { itemId: 3774056, price: 18.00, vatRateId: 2, vatPercent: 5 },
+    { itemId: 3671799, price: 11.48, vatRateId: 1, vatPercent: 25 },
   ],
   super: [
-    { itemId: 3668105, price: 19.50, vatRateId: 2, vatPercent: 5 },
-    { itemId: 3668106, price: 12.02, vatRateId: 1, vatPercent: 25 },
+    { itemId: 3774022, price: 19.50, vatRateId: 2, vatPercent: 5 },
+    { itemId: 3774033, price: 12.02, vatRateId: 1, vatPercent: 25 },
   ],
 };
 
