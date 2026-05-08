@@ -33,11 +33,14 @@ export async function POST(req: NextRequest) {
   if (!user) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
   try {
-    const customers = await stripe.customers.list({ email: user.email, limit: 1 });
+    const customers = await stripe.customers.list({ email: user.email, limit: 10 });
     if (customers.data.length === 0) return NextResponse.json({ subscriptions: [] });
 
-    const customer = customers.data[0];
-    const stripeSubs = await stripe.subscriptions.list({ customer: customer.id, limit: 10, status: "all" });
+    const allStripeSubs = (await Promise.all(
+      customers.data.map(c => stripe.subscriptions.list({ customer: c.id, limit: 10, status: "all" }))
+    )).flatMap(r => r.data);
+
+    const stripeSubs = { data: allStripeSubs };
     if (stripeSubs.data.length === 0) return NextResponse.json({ subscriptions: [] });
 
     const subs = await getSubscriptions();
@@ -54,7 +57,7 @@ export async function POST(req: NextRequest) {
         id: existingIdx >= 0 ? subs[existingIdx].id : randomBytes(12).toString("hex"),
         userId,
         stripeSubscriptionId: stripeSub.id,
-        stripeCustomerId: customer.id,
+        stripeCustomerId: (stripeSub as any).customer as string,
         plan,
         status: stripeSub.status as "active" | "canceled" | "past_due",
         currentPeriodEnd: periodEnd ? new Date(periodEnd * 1000).toISOString() : new Date(Date.now() + 30 * 86400000).toISOString(),
