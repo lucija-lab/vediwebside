@@ -62,6 +62,7 @@ export async function createMinimaxInvoice(params: {
   customerName: string;
   customerAddress: string;
   customerCity: string;
+  customerPostalCode?: string;
   customerEmail: string;
   plan: string;
   deliveryDate?: string;
@@ -87,7 +88,7 @@ export async function createMinimaxInvoice(params: {
     DateDue: dt,
     AddresseeName: params.customerName,
     AddresseeAddress: params.customerAddress,
-    AddresseePostalCode: "",
+    AddresseePostalCode: params.customerPostalCode || "10000",
     AddresseeCity: params.customerCity,
     AddresseeCountry: { ID: 95 },
     Currency: { ID: 7 },
