@@ -42,6 +42,7 @@ function SuccessContent() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sessionId }),
     }).catch(() => {});
+    fetch("/api/sync-subscription", { method: "POST" }).catch(() => {});
   }, [params]);
 
   return (
