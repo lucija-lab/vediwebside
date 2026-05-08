@@ -79,17 +79,8 @@ export async function PATCH(req: NextRequest) {
 
   // Facture Minimax à la 2ème livraison
   if (updates.status === "delivered" && delivery.status !== "delivered") {
-    const allDeliveries = await getDeliveries();
-    const deliveredCount = allDeliveries.filter(
-      d => (delivery.subscriptionId
-        ? d.subscriptionId === delivery.subscriptionId
-        : d.userId === delivery.userId && d.plan === delivery.plan)
-        && d.status === "delivered" && d.id !== id
-    ).length;
-
-    if (deliveredCount % 2 === 0) {
-      const client = users.find(u => u.id === delivery.userId);
-      if (client) {
+    const client = users.find(u => u.id === delivery.userId);
+    if (client) {
         createMinimaxInvoice({
           customerName: `${client.firstName} ${client.lastName}`,
           customerAddress: client.address,
@@ -107,7 +98,6 @@ export async function PATCH(req: NextRequest) {
             delivery.scheduledDate,
           ).catch(err => console.error("Invoice email error:", err.message));
         }).catch(err => console.error("Minimax invoice error:", err.message));
-      }
     }
   }
 

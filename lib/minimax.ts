@@ -73,9 +73,8 @@ export async function createMinimaxInvoice(params: {
   const rows = PLAN_ROWS[params.plan] ?? PLAN_ROWS.taman;
 
   const totalAmount = rows.reduce((sum, row) => {
-    const ht = row.price * 2;
-    const tva = ht * row.vatPercent / 100;
-    return sum + ht + tva;
+    const tva = row.price * row.vatPercent / 100;
+    return sum + row.price + tva;
   }, 0);
 
   const body: any = {
@@ -101,7 +100,7 @@ export async function createMinimaxInvoice(params: {
     IssuedInvoiceRows: rows.map((row, i) => ({
       RowNumber: i + 1,
       Item: { ID: row.itemId },
-      Quantity: 2,
+      Quantity: 1,
       Price: row.price,
       VatRate: { ID: row.vatRateId },
       VATPercent: row.vatPercent,
