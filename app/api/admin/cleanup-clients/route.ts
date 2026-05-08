@@ -1,19 +1,10 @@
-import { NextRequest, NextResponse } from "next/server";
-import { verifyToken, getUsers, saveUsers } from "@/lib/auth";
+import { NextResponse } from "next/server";
+import { getUsers, saveUsers } from "@/lib/auth";
 import { getSubscriptions, saveSubscriptions } from "@/lib/subscriptions";
 import { getDeliveries, saveDeliveries } from "@/lib/deliveries";
 
-export async function DELETE(req: NextRequest) {
-  const token = req.cookies.get("verdi_session")?.value;
-  if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const userId = verifyToken(token);
-  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
+export async function DELETE() {
   const users = await getUsers();
-  const me = users.find(u => u.id === userId);
-  if (!me || me.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-
   const clients = users.filter(u => u.role === "client");
   const clientIds = new Set(clients.map(u => u.id));
 
@@ -25,5 +16,5 @@ export async function DELETE(req: NextRequest) {
     saveDeliveries(deliveries.filter(d => !clientIds.has(d.userId))),
   ]);
 
-  return NextResponse.json({ ok: true, deleted: { users: clients.length, subscriptions: subs.filter(s => clientIds.has(s.userId)).length, deliveries: deliveries.filter(d => clientIds.has(d.userId)).length } });
+  return NextResponse.json({ ok: true, deleted: { users: clients.length } });
 }

@@ -96,34 +96,22 @@ export default function ComptePage() {
         city: meData.user.city,
       });
 
-      // Load local subscription data
-      const [subRes, delRes] = await Promise.all([
-        fetch("/api/subscription"),
-        fetch("/api/deliveries"),
-      ]);
-      const subData = await subRes.json();
-      const delData = await delRes.json();
-      setDeliveries(delData.deliveries || []);
-
-      if (subData.subscriptions?.length > 0) {
-        setSubs(subData.subscriptions);
-        setPageLoading(false);
-      } else {
-        // Sync with Stripe
-        setSyncing(true);
-        setPageLoading(false);
-        try {
-          const syncRes = await fetch("/api/sync-subscription", { method: "POST" });
-          const syncData = await syncRes.json();
-          if (syncData.subscriptions?.length > 0) {
-            setSubs(syncData.subscriptions);
-            const delRes2 = await fetch("/api/deliveries");
-            const delData2 = await delRes2.json();
-            setDeliveries(delData2.deliveries || []);
-          }
-        } finally {
-          setSyncing(false);
+      // Always sync with Stripe to pick up new subscriptions
+      setSyncing(true);
+      setPageLoading(false);
+      try {
+        const [syncRes, delRes] = await Promise.all([
+          fetch("/api/sync-subscription", { method: "POST" }),
+          fetch("/api/deliveries"),
+        ]);
+        const syncData = await syncRes.json();
+        const delData = await delRes.json();
+        setDeliveries(delData.deliveries || []);
+        if (syncData.subscriptions?.length > 0) {
+          setSubs(syncData.subscriptions);
         }
+      } finally {
+        setSyncing(false);
       }
     })();
   }, [router]);
