@@ -81,7 +81,7 @@ export async function createMinimaxInvoice(params: {
   const body: any = {
     InvoiceType: "R",
     DocumentNumbering: { ID: 65500 },
-    Customer: { ID: 4334537 },
+    Customer: { ID: 4526294 },
     DateIssued: dt,
     DateTransaction: dt,
     DateTransactionFrom: dt,
