@@ -8,6 +8,7 @@ export type DeliveryStatus = "pending" | "assigned" | "delivered" | "skipped" | 
 export interface Delivery {
   id: string;
   userId: string;
+  subscriptionId?: string;
   livreurId?: string;
   plan: "taman" | "eko" | "super";
   address: string;

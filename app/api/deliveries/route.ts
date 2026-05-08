@@ -81,7 +81,10 @@ export async function PATCH(req: NextRequest) {
   if (updates.status === "delivered" && delivery.status !== "delivered") {
     const allDeliveries = await getDeliveries();
     const deliveredCount = allDeliveries.filter(
-      d => d.userId === delivery.userId && d.status === "delivered" && d.id !== id
+      d => (delivery.subscriptionId
+        ? d.subscriptionId === delivery.subscriptionId
+        : d.userId === delivery.userId && d.plan === delivery.plan)
+        && d.status === "delivered" && d.id !== id
     ).length;
 
     if (deliveredCount % 2 === 0) {

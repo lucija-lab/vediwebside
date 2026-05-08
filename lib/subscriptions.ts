@@ -35,3 +35,8 @@ export async function getUserSubscription(userId: string): Promise<Subscription 
   const subs = await getSubscriptions();
   return subs.find(s => s.userId === userId && s.status === "active") || null;
 }
+
+export async function getUserSubscriptions(userId: string): Promise<Subscription[]> {
+  const subs = await getSubscriptions();
+  return subs.filter(s => s.userId === userId && s.status === "active");
+}

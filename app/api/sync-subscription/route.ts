@@ -34,52 +34,60 @@ export async function POST(req: NextRequest) {
 
   try {
     const customers = await stripe.customers.list({ email: user.email, limit: 1 });
-    if (customers.data.length === 0) return NextResponse.json({ subscription: null });
+    if (customers.data.length === 0) return NextResponse.json({ subscriptions: [] });
 
     const customer = customers.data[0];
-    const stripeSubs = await stripe.subscriptions.list({ customer: customer.id, limit: 1, status: "all" });
-    if (stripeSubs.data.length === 0) return NextResponse.json({ subscription: null });
-
-    const stripeSub = stripeSubs.data[0];
-    const priceId = stripeSub.items.data[0]?.price.id || "";
-    const plan = planFromPriceId(priceId);
-    const periodEnd = (stripeSub as any).current_period_end;
+    const stripeSubs = await stripe.subscriptions.list({ customer: customer.id, limit: 10, status: "all" });
+    if (stripeSubs.data.length === 0) return NextResponse.json({ subscriptions: [] });
 
     const subs = await getSubscriptions();
-    const existing = subs.findIndex(s => s.userId === userId);
-    const newSub = {
-      id: existing >= 0 ? subs[existing].id : randomBytes(12).toString("hex"),
-      userId,
-      stripeSubscriptionId: stripeSub.id,
-      stripeCustomerId: customer.id,
-      plan,
-      status: stripeSub.status as "active" | "canceled" | "past_due",
-      currentPeriodEnd: periodEnd ? new Date(periodEnd * 1000).toISOString() : new Date(Date.now() + 30 * 86400000).toISOString(),
-      createdAt: existing >= 0 ? subs[existing].createdAt : new Date().toISOString(),
-    };
+    const deliveries = await getDeliveries();
+    const newSubs: typeof subs = [];
 
-    if (existing >= 0) subs[existing] = newSub;
-    else subs.push(newSub);
-    await saveSubscriptions(subs);
+    for (const stripeSub of stripeSubs.data) {
+      const priceId = stripeSub.items.data[0]?.price.id || "";
+      const plan = planFromPriceId(priceId);
+      const periodEnd = (stripeSub as any).current_period_end;
 
-    if (stripeSub.status === "active") {
-      const deliveries = await getDeliveries();
-      const hasDelivery = deliveries.some(d => d.userId === userId && d.status === "pending");
-      if (!hasDelivery) {
-        await createDelivery({
-          userId,
-          plan,
-          address: user.address,
-          city: user.city,
-          scheduledDate: nextDeliveryDate(),
-          timeSlot: "09:00–13:00",
-          status: "pending",
-          notes: "",
-        });
+      const existingIdx = subs.findIndex(s => s.stripeSubscriptionId === stripeSub.id);
+      const entry = {
+        id: existingIdx >= 0 ? subs[existingIdx].id : randomBytes(12).toString("hex"),
+        userId,
+        stripeSubscriptionId: stripeSub.id,
+        stripeCustomerId: customer.id,
+        plan,
+        status: stripeSub.status as "active" | "canceled" | "past_due",
+        currentPeriodEnd: periodEnd ? new Date(periodEnd * 1000).toISOString() : new Date(Date.now() + 30 * 86400000).toISOString(),
+        createdAt: existingIdx >= 0 ? subs[existingIdx].createdAt : new Date().toISOString(),
+      };
+
+      if (existingIdx >= 0) subs[existingIdx] = entry;
+      else subs.push(entry);
+
+      newSubs.push(entry);
+
+      if (stripeSub.status === "active") {
+        const hasDelivery = deliveries.some(d => d.subscriptionId === stripeSub.id && d.status === "pending");
+        if (!hasDelivery) {
+          await createDelivery({
+            userId,
+            subscriptionId: stripeSub.id,
+            plan,
+            address: user.address,
+            city: user.city,
+            scheduledDate: nextDeliveryDate(),
+            timeSlot: "09:00–13:00",
+            status: "pending",
+            notes: "",
+          });
+        }
       }
     }
 
-    return NextResponse.json({ subscription: newSub });
+    await saveSubscriptions(subs);
+
+    const activeNewSubs = newSubs.filter(s => s.status === "active");
+    return NextResponse.json({ subscriptions: activeNewSubs, subscription: activeNewSubs[0] ?? null });
   } catch {
     return NextResponse.json({ error: "Stripe error" }, { status: 500 });
   }

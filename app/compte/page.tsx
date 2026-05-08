@@ -70,7 +70,7 @@ export default function ComptePage() {
   const router = useRouter();
 
   const [user, setUser] = useState<User | null>(null);
-  const [sub, setSub] = useState<Subscription | null>(null);
+  const [subs, setSubs] = useState<Subscription[]>([]);
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [tab, setTab] = useState(0);
   const [form, setForm] = useState({ firstName: "", lastName: "", phone: "", address: "", city: "" });
@@ -105,8 +105,8 @@ export default function ComptePage() {
       const delData = await delRes.json();
       setDeliveries(delData.deliveries || []);
 
-      if (subData.subscription) {
-        setSub(subData.subscription);
+      if (subData.subscriptions?.length > 0) {
+        setSubs(subData.subscriptions);
         setPageLoading(false);
       } else {
         // Sync with Stripe
@@ -115,8 +115,8 @@ export default function ComptePage() {
         try {
           const syncRes = await fetch("/api/sync-subscription", { method: "POST" });
           const syncData = await syncRes.json();
-          if (syncData.subscription) {
-            setSub(syncData.subscription);
+          if (syncData.subscriptions?.length > 0) {
+            setSubs(syncData.subscriptions);
             const delRes2 = await fetch("/api/deliveries");
             const delData2 = await delRes2.json();
             setDeliveries(delData2.deliveries || []);
@@ -233,7 +233,7 @@ export default function ComptePage() {
                 </div>
               )}
 
-              {!sub ? (
+              {subs.length === 0 ? (
                 <div style={{ background: "white", borderRadius: 20, padding: "3rem 2rem", textAlign: "center", boxShadow: "0 1px 12px rgba(0,0,0,0.06)" }}>
                   <div style={{ width: 72, height: 72, borderRadius: "50%", background: "#f0f7f3", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", fontSize: 30 }}>🥦</div>
                   <h2 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, color: "#1c3a28", marginBottom: "0.75rem" }}>{tx.noSub}</h2>
@@ -242,34 +242,35 @@ export default function ComptePage() {
                 </div>
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-                  {/* Plan card */}
-                  <div style={{ background: "white", borderRadius: 20, padding: "2rem", boxShadow: "0 1px 12px rgba(0,0,0,0.06)", border: "1px solid #eee" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", marginBottom: "1.75rem" }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                        <div style={{ width: 48, height: 48, borderRadius: 14, background: "#f0f7f3", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>🧺</div>
-                        <div>
-                          <p style={{ fontSize: 11, color: "#9a9a8a", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "0.2rem" }}>{tx.plan}</p>
-                          <p style={{ fontSize: 20, fontWeight: 700, color: "#1c3a28", fontFamily: "var(--font-playfair), Georgia, serif" }}>{planLabel(sub.plan)}</p>
-                          <p style={{ fontSize: 13, color: "#6a8a72", marginTop: "0.1rem" }}>{planDesc(sub.plan)}</p>
+                  {subs.map((sub, idx) => (
+                    <div key={idx} style={{ background: "white", borderRadius: 20, padding: "2rem", boxShadow: "0 1px 12px rgba(0,0,0,0.06)", border: "1px solid #eee" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "1rem", marginBottom: "1.75rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                          <div style={{ width: 48, height: 48, borderRadius: 14, background: "#f0f7f3", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>🧺</div>
+                          <div>
+                            <p style={{ fontSize: 11, color: "#9a9a8a", textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "0.2rem" }}>{tx.plan}</p>
+                            <p style={{ fontSize: 20, fontWeight: 700, color: "#1c3a28", fontFamily: "var(--font-playfair), Georgia, serif" }}>{planLabel(sub.plan)}</p>
+                            <p style={{ fontSize: 13, color: "#6a8a72", marginTop: "0.1rem" }}>{planDesc(sub.plan)}</p>
+                          </div>
+                        </div>
+                        <div style={{ textAlign: "right" }}>
+                          {statusBadge(sub.status)}
+                          <p style={{ fontSize: 24, fontWeight: 800, color: "#1c3a28", marginTop: "0.5rem" }}>{planPrice(sub.plan)}<span style={{ fontSize: 13, fontWeight: 400, color: "#9a9a8a" }}>/mj.</span></p>
                         </div>
                       </div>
-                      <div style={{ textAlign: "right" }}>
-                        {statusBadge(sub.status)}
-                        <p style={{ fontSize: 24, fontWeight: 800, color: "#1c3a28", marginTop: "0.5rem" }}>{planPrice(sub.plan)}<span style={{ fontSize: 13, fontWeight: 400, color: "#9a9a8a" }}>/mj.</span></p>
-                      </div>
-                    </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", borderTop: "1px solid #f0ede5", paddingTop: "1.5rem" }}>
-                      <div style={{ background: "#faf9f7", borderRadius: 12, padding: "1rem" }}>
-                        <p style={{ fontSize: 11, color: "#9a9a8a", marginBottom: "0.4rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>{tx.nextBilling}</p>
-                        <p style={{ fontSize: 16, fontWeight: 700, color: "#1c3a28" }}>{new Date(sub.currentPeriodEnd).toLocaleDateString(lang === "hr" ? "hr-HR" : "en-GB", { day: "numeric", month: "long", year: "numeric" })}</p>
-                      </div>
-                      <div style={{ background: "#faf9f7", borderRadius: 12, padding: "1rem" }}>
-                        <p style={{ fontSize: 11, color: "#9a9a8a", marginBottom: "0.4rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>{tx.since}</p>
-                        <p style={{ fontSize: 16, fontWeight: 700, color: "#1c3a28" }}>{new Date(sub.createdAt).toLocaleDateString(lang === "hr" ? "hr-HR" : "en-GB", { day: "numeric", month: "long", year: "numeric" })}</p>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", borderTop: "1px solid #f0ede5", paddingTop: "1.5rem" }}>
+                        <div style={{ background: "#faf9f7", borderRadius: 12, padding: "1rem" }}>
+                          <p style={{ fontSize: 11, color: "#9a9a8a", marginBottom: "0.4rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>{tx.nextBilling}</p>
+                          <p style={{ fontSize: 16, fontWeight: 700, color: "#1c3a28" }}>{new Date(sub.currentPeriodEnd).toLocaleDateString(lang === "hr" ? "hr-HR" : "en-GB", { day: "numeric", month: "long", year: "numeric" })}</p>
+                        </div>
+                        <div style={{ background: "#faf9f7", borderRadius: 12, padding: "1rem" }}>
+                          <p style={{ fontSize: 11, color: "#9a9a8a", marginBottom: "0.4rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>{tx.since}</p>
+                          <p style={{ fontSize: 16, fontWeight: 700, color: "#1c3a28" }}>{new Date(sub.createdAt).toLocaleDateString(lang === "hr" ? "hr-HR" : "en-GB", { day: "numeric", month: "long", year: "numeric" })}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
 
                   <a href="mailto:lucija@verdihrvatska.com?subject=Otkaz pretplate&body=Poštovana Lucija, želim otkazati svoju pretplatu." style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "white", border: "1.5px solid #e2d9c8", color: "#9a9a8a", textDecoration: "none", padding: "0.85rem 1.75rem", borderRadius: 50, fontSize: 14, fontWeight: 500, width: "fit-content", boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
                     {lang === "hr" ? "Otkazati pretplatu? Kontaktirajte nas" : "Cancel subscription? Contact us"}
