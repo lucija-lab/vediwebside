@@ -80,7 +80,7 @@ export async function sendOrderConfirmationEmail(email: string, firstName: strin
         </p>
         <div style="background: #f0f7f0; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
           <p style="margin: 0 0 8px; font-size: 14px; color: #4a6a52;">✓ &nbsp;Primit ćete obavijest prije svake dostave</p>
-          <p style="margin: 0 0 8px; font-size: 14px; color: #4a6a52;">✓ &nbsp;Prva dostava stiže za 2 tjedna</p>
+          <p style="margin: 0 0 8px; font-size: 14px; color: #4a6a52;">✓ &nbsp;Prva dostava stiže uskoro</p>
           <p style="margin: 0 0 8px; font-size: 14px; color: #4a6a52;">✓ &nbsp;Fiskalizirani račun bit će Vam poslan nakon svake dostave</p>
           <p style="margin: 0; font-size: 14px; color: #4a6a52;">✓ &nbsp;Za pitanja pišite na lucija@verdihrvatska.com</p>
         </div>
