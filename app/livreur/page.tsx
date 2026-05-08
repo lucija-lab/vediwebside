@@ -15,7 +15,7 @@ export default function LivreurPage() {
   const router = useRouter();
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<"today" | "all">("today");
+  const [filter, setFilter] = useState<"today" | "all">("all");
 
   useEffect(() => {
     (async () => {
