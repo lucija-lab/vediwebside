@@ -97,7 +97,7 @@ export async function createMinimaxInvoice(params: {
     DeliveryNoteReportTemplate: { ID: 770988 },
     PricesOnInvoice: "N",
     RecurringInvoice: "N",
-    Cashier: { ID: 278563 },
+    Worker: { ID: 278563 },
     Note: "Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!",
     IssuedInvoiceRows: rows.map((row, i) => ({
       RowNumber: i + 1,
