@@ -52,16 +52,16 @@ export async function POST(req: NextRequest) {
         : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
 
       const subs = await getSubscriptions();
-      const existing = subs.findIndex(s => s.userId === user.id);
+      const existing = subs.findIndex(s => s.stripeSubscriptionId === stripeSubId);
       const newSub = {
-        id: randomBytes(12).toString("hex"),
+        id: existing >= 0 ? subs[existing].id : randomBytes(12).toString("hex"),
         userId: user.id,
         stripeSubscriptionId: stripeSubId,
         stripeCustomerId: session.customer as string,
         plan,
         status: "active" as const,
         currentPeriodEnd: periodEndDate,
-        createdAt: new Date().toISOString(),
+        createdAt: existing >= 0 ? subs[existing].createdAt : new Date().toISOString(),
       };
 
       if (existing >= 0) subs[existing] = newSub;
@@ -70,6 +70,7 @@ export async function POST(req: NextRequest) {
 
       await createDelivery({
         userId: user.id,
+        subscriptionId: stripeSubId,
         plan,
         address: user.address,
         city: user.city,

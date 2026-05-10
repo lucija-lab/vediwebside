@@ -77,7 +77,7 @@ export async function PATCH(req: NextRequest) {
 
   const ok = await updateDelivery(id, updates);
 
-  // Facture Minimax à la 2ème livraison
+  // Facture Minimax à chaque livraison
   if (updates.status === "delivered" && delivery.status !== "delivered") {
     const client = users.find(u => u.id === delivery.userId);
     if (client) {
