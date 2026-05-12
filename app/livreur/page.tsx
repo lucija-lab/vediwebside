@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useLang } from "@/context/LanguageContext";
 
-interface Delivery { id: string; userId: string; plan: string; address: string; city: string; scheduledDate: string; timeSlot: string; status: string; notes: string; }
+interface Delivery { id: string; userId: string; plan: string; address: string; city: string; scheduledDate: string; timeSlot: string; status: string; notes: string; clientName?: string; clientPhone?: string; }
 
 const STATUS_COLOR: Record<string, string> = {
   pending: "#c8963e", assigned: "#3a7a52", delivered: "#6a9a7a", skipped: "#8a9a8a", failed: "#dc2626",
@@ -122,6 +122,15 @@ export default function LivreurPage() {
                 {statusLabel[d.status] || d.status}
               </span>
             </div>
+
+            {/* Client info */}
+            {(d.clientName || d.clientPhone) && (
+              <div style={{ background: "#162d1e", borderRadius: 10, padding: "1rem", marginBottom: "0.75rem" }}>
+                <p style={{ fontSize: 13, color: "#6a9a7a", marginBottom: "0.25rem" }}>{lang === "hr" ? "Klijent" : "Client"}</p>
+                {d.clientName && <p style={{ fontSize: 15, fontWeight: 600, color: "#e8f0e4" }}>{d.clientName}</p>}
+                {d.clientPhone && <p style={{ fontSize: 14, color: "#c8963e" }}>{d.clientPhone}</p>}
+              </div>
+            )}
 
             {/* Address */}
             <div style={{ background: "#162d1e", borderRadius: 10, padding: "1rem", marginBottom: "1rem" }}>

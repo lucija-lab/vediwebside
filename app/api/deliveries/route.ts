@@ -28,7 +28,16 @@ export async function GET(req: NextRequest) {
   if (user.role === "admin") return NextResponse.json({ deliveries: all.map(enrichDelivery) });
   if (user.role === "livreur") {
     const mine = all.filter(d => d.livreurId === userId || d.status === "pending");
-    return NextResponse.json({ deliveries: mine.map(enrichDelivery) });
+    return NextResponse.json({
+      deliveries: mine.map(d => {
+        const client = users.find(u => u.id === d.userId);
+        return {
+          ...enrichDelivery(d),
+          clientName: client ? `${client.firstName} ${client.lastName}` : null,
+          clientPhone: client?.phone || null,
+        };
+      }),
+    });
   }
 
   const mine = all.filter(d => d.userId === userId).map(enrichDelivery);
