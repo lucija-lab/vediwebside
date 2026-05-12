@@ -6,8 +6,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2026-03-25.dahlia",
 });
 
+const PLAN_PRICES: Record<string, string> = {
+  taman: process.env.NEXT_PUBLIC_STRIPE_PRICE_TAMAN!,
+  eko: process.env.NEXT_PUBLIC_STRIPE_PRICE_EKO!,
+  super: process.env.NEXT_PUBLIC_STRIPE_PRICE_SUPER!,
+};
+
 export async function POST(req: NextRequest) {
-  const { priceId } = await req.json();
+  const { plan } = await req.json();
+  const priceId = PLAN_PRICES[plan];
+  if (!priceId) return NextResponse.json({ error: "Invalid plan" }, { status: 400 });
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
   // Reuse existing Stripe customer if user is logged in

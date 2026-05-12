@@ -103,11 +103,6 @@ const content = {
   },
 };
 
-const PRICE_KEYS = {
-  taman: process.env.NEXT_PUBLIC_STRIPE_PRICE_TAMAN,
-  eko: process.env.NEXT_PUBLIC_STRIPE_PRICE_EKO,
-  super: process.env.NEXT_PUBLIC_STRIPE_PRICE_SUPER,
-};
 
 export default function KosaricePage() {
   const { lang } = useLang();
@@ -126,7 +121,7 @@ export default function KosaricePage() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ priceId: PRICE_KEYS[key] }),
+        body: JSON.stringify({ plan: key }),
       });
       const data = await res.json();
       if (data.url) {
