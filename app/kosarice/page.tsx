@@ -128,10 +128,18 @@ export default function KosaricePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ priceId: PRICE_KEYS[key] }),
       });
-      const { url } = await res.json();
-      if (url) window.location.href = url;
-    } catch {
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        console.error("Checkout error:", data.error);
+        setLoading(null);
+        alert(lang === "hr" ? "Greška pri plaćanju. Pokušajte ponovo." : "Payment error. Please try again.");
+      }
+    } catch (err) {
+      console.error("Checkout fetch error:", err);
       setLoading(null);
+      alert(lang === "hr" ? "Greška pri plaćanju. Pokušajte ponovo." : "Payment error. Please try again.");
     }
   };
 
