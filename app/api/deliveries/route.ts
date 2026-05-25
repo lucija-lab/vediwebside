@@ -90,23 +90,26 @@ export async function PATCH(req: NextRequest) {
   if (updates.status === "delivered" && delivery.status !== "delivered") {
     const client = users.find(u => u.id === delivery.userId);
     if (client) {
-        createMinimaxInvoice({
+      try {
+        const invoice = await createMinimaxInvoice({
           customerName: `${client.firstName} ${client.lastName}`,
           customerAddress: client.address,
           customerCity: client.city,
           customerEmail: client.email,
           plan: delivery.plan,
           deliveryDate: delivery.scheduledDate,
-        }).then(invoice => {
-          const invoiceNumber = invoice?.InvoiceNumber ?? invoice?.invoiceNumber ?? "—";
-          sendInvoiceEmail(
-            client.email,
-            client.firstName,
-            delivery.plan,
-            String(invoiceNumber),
-            delivery.scheduledDate,
-          ).catch(err => console.error("Invoice email error:", err.message));
-        }).catch(err => console.error("Minimax invoice error:", err.message));
+        });
+        const invoiceNumber = invoice?.InvoiceNumber ?? invoice?.invoiceNumber ?? "—";
+        await sendInvoiceEmail(
+          client.email,
+          client.firstName,
+          delivery.plan,
+          String(invoiceNumber),
+          delivery.scheduledDate,
+        );
+      } catch (err: any) {
+        console.error("Minimax invoice error:", err.message);
+      }
     }
   }
 
