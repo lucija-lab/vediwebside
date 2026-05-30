@@ -26,10 +26,10 @@ function FeatureCheck({ text, dark = false }: { text: string; dark?: boolean }) 
 export default function KosariceePage() {
   const t = useTranslations("products");
 
-  const tamanFeatures = Array.from({ length: 6 }, (_, i) =>
+  const tamanFeatures = Array.from({ length: 7 }, (_, i) =>
     t(`taman.features.${i}`)
   );
-  const superFeatures = Array.from({ length: 6 }, (_, i) =>
+  const superFeatures = Array.from({ length: 7 }, (_, i) =>
     t(`super.features.${i}`)
   );
 
