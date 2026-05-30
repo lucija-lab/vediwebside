@@ -21,7 +21,7 @@ const content = {
     basketsTitle: "Naše košarice",
     basketsSub: "Tri košarice, ista kvaliteta – odaberite ono što vam odgovara.",
     taman: { name: 'Košara "Taman"', price: "62€/mj. (uklj. PDV)", weight: "min. 7 kg", cultures: "6+ kultura", desc: "Svježe sezonsko povrće za 1–2 osobe. Dostavlja se svaka 2 tjedna, kamo i kada želite.", cta: "Naruči Taman" },
-    eko: { name: 'Košara "Eko"', price: "66,50€/mj. (uklj. PDV)", weight: "~8 kg", cultures: "Eko certificirano", desc: "Ekološki certificirano povrće iz provjerenih eko OPG-ova. Čisto, prirodno, direktno s polja.", cta: "Naruči Eko" },
+    eko: { name: 'Košara "Eko"', price: "66,50€/mj. (uklj. PDV)", weight: "~8 kg", cultures: "Eko certificirano", desc: "Ekološki certificirano povrće s OPG Novak. Svježe, prirodno, direktno s polja.", cta: "Naruči Eko" },
     super: { name: 'Košara "Super"', price: "71€/mj. (uklj. PDV)", weight: "min. 10,5 kg", cultures: "7+ kultura", desc: "Bogatija košarica za veće kućanstvo ili prave ljubitelje svježeg povrća.", cta: "Naruči Super" },
     farmsTitle: "Naši OPG partneri",
     farmsSub: "Surađujemo s obiteljskim farmama iz Zagreba i okolice. Ljudi koji s ljubavlju uzgajaju ono što jedete.",
