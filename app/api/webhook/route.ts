@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { getUsers } from "@/lib/auth";
 import { getSubscriptions, saveSubscriptions } from "@/lib/subscriptions";
 import { createDelivery } from "@/lib/deliveries";
+import { createMinimaxInvoice } from "@/lib/minimax";
 import { randomBytes } from "crypto";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -79,6 +80,17 @@ export async function POST(req: NextRequest) {
         status: "pending",
         notes: "",
       });
+
+      createMinimaxInvoice({
+        customerName: user.name ?? user.email,
+        customerAddress: user.address ?? "",
+        customerCity: user.city ?? "",
+        customerPostalCode: user.postalCode ?? "10000",
+        customerEmail: user.email,
+        plan,
+        deliveryDate: nextDeliveryDate(),
+      }).catch(err => console.error("Minimax invoice error:", err.message));
+
       break;
     }
 
