@@ -82,10 +82,10 @@ export async function POST(req: NextRequest) {
       });
 
       createMinimaxInvoice({
-        customerName: user.name ?? user.email,
+        customerName: `${user.firstName} ${user.lastName}`.trim() || user.email,
         customerAddress: user.address ?? "",
         customerCity: user.city ?? "",
-        customerPostalCode: user.postalCode ?? "10000",
+        customerPostalCode: "10000",
         customerEmail: user.email,
         plan,
         deliveryDate: nextDeliveryDate(),
