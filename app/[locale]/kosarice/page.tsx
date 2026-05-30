@@ -60,7 +60,10 @@ export default function KosariceePage() {
             </div>
             <div className="h-3 bg-[#2d6a2d]" />
             <div className="p-8 pt-14">
-              <h2 className="text-2xl font-bold text-[#0f1a0e] mb-2">{t("taman.name")}</h2>
+              <div className="flex items-center gap-2 flex-wrap mb-2">
+                <h2 className="text-2xl font-bold text-[#0f1a0e]">{t("taman.name")}</h2>
+                <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full whitespace-nowrap">Limitiran broj pretplata</span>
+              </div>
               <div className="flex items-baseline gap-1 mb-2">
                 <span className="text-5xl font-extrabold text-[#2d6a2d]">{t("taman.price")}€</span>
                 <span className="text-[#6b7280] text-lg">{t("taman.period")}</span>
@@ -90,7 +93,10 @@ export default function KosariceePage() {
             </div>
             <div className="h-3 bg-[#e8b84b]" />
             <div className="p-8 pt-14">
-              <h2 className="text-2xl font-bold text-white mb-2">{t("super.name")}</h2>
+              <div className="flex items-center gap-2 flex-wrap mb-2">
+                <h2 className="text-2xl font-bold text-white">{t("super.name")}</h2>
+                <span className="text-xs font-semibold text-gray-400 bg-white/10 px-2 py-0.5 rounded-full whitespace-nowrap">Limitiran broj pretplata</span>
+              </div>
               <div className="flex items-baseline gap-1 mb-2">
                 <span className="text-5xl font-extrabold text-[#e8b84b]">{t("super.price")}€</span>
                 <span className="text-white/50 text-lg">{t("super.period")}</span>

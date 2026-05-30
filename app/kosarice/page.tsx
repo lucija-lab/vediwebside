@@ -193,7 +193,10 @@ export default function KosaricePage() {
                   )}
                 </div>
                 <div style={{ padding: "2rem", display: "flex", flexDirection: "column", flex: 1 }}>
-                  <h2 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 24, color: dark ? "#faf7f0" : "#1c3a28", marginBottom: "0.5rem" }}>{data.name}</h2>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
+                    <h2 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 24, color: dark ? "#faf7f0" : "#1c3a28", margin: 0 }}>{data.name}</h2>
+                    <span style={{ fontSize: 11, fontWeight: 600, color: "#888", background: dark ? "rgba(255,255,255,0.1)" : "#f0f0f0", padding: "0.2rem 0.6rem", borderRadius: 20, whiteSpace: "nowrap" }}>{lang === "hr" ? "Limitiran broj pretplata" : "Limited subscriptions"}</span>
+                  </div>
                   <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem", marginBottom: "1.25rem" }}>
                     <span style={{ fontSize: 38, fontWeight: 700, color: priceColor }}>{data.price}€</span>
                     <span style={{ color: dark ? "#6a9a7a" : "#8a9a8a", fontSize: 14 }}>/{data.period}</span>
