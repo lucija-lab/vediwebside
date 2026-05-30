@@ -150,7 +150,10 @@ export default function HomePage() {
                   <img src="/images/panier-taman.png" alt="Košara Taman" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
                 </div>
                 <div style={{ padding: "1.75rem" }}>
-                  <h3 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, color: "#1c3a28", marginBottom: "0.4rem" }}>{tx.taman.name}</h3>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.4rem" }}>
+                    <h3 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, color: "#1c3a28", margin: 0 }}>{tx.taman.name}</h3>
+                    <span style={{ fontSize: 11, fontWeight: 600, color: "#888", background: "#f0f0f0", padding: "0.2rem 0.6rem", borderRadius: 20, whiteSpace: "nowrap" }}>{lang === "hr" ? "Limitiran broj pretplata" : "Limited subscriptions"}</span>
+                  </div>
                   <p style={{ fontSize: 26, fontWeight: 700, color: "#3a7a52", marginBottom: "0.75rem" }}>{tx.taman.price}</p>
                   <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.9rem", flexWrap: "wrap" }}>
                     <span style={tagStyle}>{tx.taman.weight}</span>
@@ -166,7 +169,10 @@ export default function HomePage() {
                   <img src="/images/panier-eko.png" alt="Košara Eko" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }} />
                 </div>
                 <div style={{ padding: "1.75rem" }}>
-                  <h3 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, color: "#1c3a28", marginBottom: "0.4rem" }}>{tx.eko.name}</h3>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.4rem" }}>
+                    <h3 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, color: "#1c3a28", margin: 0 }}>{tx.eko.name}</h3>
+                    <span style={{ fontSize: 11, fontWeight: 600, color: "#888", background: "#f0f0f0", padding: "0.2rem 0.6rem", borderRadius: 20, whiteSpace: "nowrap" }}>{lang === "hr" ? "Limitiran broj pretplata" : "Limited subscriptions"}</span>
+                  </div>
                   <p style={{ fontSize: 26, fontWeight: 700, color: "#4a8a3a", marginBottom: "0.75rem" }}>{tx.eko.price}</p>
                   <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.9rem", flexWrap: "wrap" }}>
                     <span style={tagStyle}>{tx.eko.weight}</span>
@@ -185,7 +191,10 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div style={{ padding: "1.75rem" }}>
-                  <h3 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, color: "#1c3a28", marginBottom: "0.4rem" }}>{tx.super.name}</h3>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", flexWrap: "wrap", marginBottom: "0.4rem" }}>
+                    <h3 style={{ fontFamily: "var(--font-playfair), Georgia, serif", fontSize: 22, color: "#1c3a28", margin: 0 }}>{tx.super.name}</h3>
+                    <span style={{ fontSize: 11, fontWeight: 600, color: "#888", background: "#f0f0f0", padding: "0.2rem 0.6rem", borderRadius: 20, whiteSpace: "nowrap" }}>{lang === "hr" ? "Limitiran broj pretplata" : "Limited subscriptions"}</span>
+                  </div>
                   <p style={{ fontSize: 26, fontWeight: 700, color: "#3a7a52", marginBottom: "0.75rem" }}>{tx.super.price}</p>
                   <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.9rem", flexWrap: "wrap" }}>
                     <span style={tagStyle}>{tx.super.weight}</span>
