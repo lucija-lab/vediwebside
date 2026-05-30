@@ -17,7 +17,7 @@ const content = {
       period: "mj.",
       desc: "Idealno za 1–2 osobe. Svježe ubrano sezonsko povrće direktno od provjerenih obiteljskih farmi.",
       cta: "Naruči Taman košaricu",
-      features: ["min. 7 kg svježeg povrća", "6+ različitih kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme", "Limitiran broj pretplata"],
+      features: ["min. 7 kg svježeg povrća", "6+ različitih kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme"],
     },
     eko: {
       name: "Košara Eko",
@@ -25,7 +25,7 @@ const content = {
       period: "mj.",
       desc: "Ekološki certificirano povrće s OPG Novak. Svježe, prirodno, direktno s polja.",
       cta: "Naruči Eko košaricu",
-      features: ["Eko certificirano povrće", "Sezonski odabir kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme", "Limitiran broj pretplata"],
+      features: ["Eko certificirano povrće", "Sezonski odabir kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme"],
     },
     super: {
       name: "Košara Super",
@@ -33,7 +33,7 @@ const content = {
       period: "mj.",
       desc: "Za veće obitelji ili prave ljubitelje svježeg povrća. Više kultura, veće količine, ista visoka kvaliteta.",
       cta: "Naruči Super košaricu",
-      features: ["min. 10,5 kg svježeg povrća", "7+ različitih kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme", "Limitiran broj pretplata"],
+      features: ["min. 10,5 kg svježeg povrća", "7+ različitih kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme"],
     },
     compare: "Usporedi košarice",
     compLabel: ["", "Taman", "Eko", "Super"],
