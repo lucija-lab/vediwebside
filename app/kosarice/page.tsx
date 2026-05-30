@@ -23,7 +23,7 @@ const content = {
       name: "Košara Eko",
       price: "66,50",
       period: "mj.",
-      desc: "Ekološki uzgojena sezona. Odabir povrća iz certificiranih eko OPG-ova — čisto, prirodno, direktno s polja.",
+      desc: "Ekološki certificirano povrće s OPG Novak. Svježe, prirodno, direktno s polja.",
       cta: "Naruči Eko košaricu",
       features: ["Eko certificirano povrće", "Sezonski odabir kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme", "Limitiran broj pretplata"],
     },
