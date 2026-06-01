@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { LanguageProvider } from "@/context/LanguageContext";
 
@@ -14,6 +15,15 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="hr" className={`${inter.variable} ${playfair.variable}`}>
+      <head>
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=AW-18160975263" strategy="afterInteractive" />
+        <Script id="google-ads" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'AW-18160975263');
+        `}</Script>
+      </head>
       <body>
         <LanguageProvider>
           {children}
