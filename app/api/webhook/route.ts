@@ -108,7 +108,7 @@ export async function POST(req: NextRequest) {
         delivery2Date,
       }).then(invoice => {
         const invoiceNumber = invoice?.InvoiceNumber ?? invoice?.DocumentNumber ?? invoice?.ID ?? "—";
-        return sendInvoiceEmail(user.email, user.firstName, plan, String(invoiceNumber), delivery1Date);
+        return sendInvoiceEmail(user.email, user.firstName, plan, String(invoiceNumber), delivery1Date, delivery2Date);
       }).catch(err => console.error("Minimax/email error:", err.message));
 
       break;

@@ -100,6 +100,7 @@ export async function sendInvoiceEmail(
   plan: string,
   invoiceNumber: string,
   deliveryDate: string,
+  delivery2Date?: string,
 ) {
   const planNames: Record<string, string> = {
     taman: "Taman Košara",
@@ -117,14 +118,17 @@ export async function sendInvoiceEmail(
         <img src="https://verdihrvatska.com/images/logo.png" alt="Verdi" style="height: 36px; margin-bottom: 32px;" />
         <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 16px;">Vaš račun je spreman, ${firstName}!</h1>
         <p style="font-size: 16px; line-height: 1.7; color: #4a6a52; margin-bottom: 24px;">
-          U prilogu se nalazi Vaš račun za pretplatu na <strong>${planName}</strong>.<br/>
-          Datum dostave: <strong>${deliveryDate}</strong>
+          U prilogu se nalazi Vaš račun za pretplatu na <strong>${planName}</strong>.
         </p>
         <div style="background: #f0f7f0; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
           <p style="margin: 0 0 4px; font-size: 13px; color: #4a6a52;">Broj računa</p>
           <p style="margin: 0 0 16px; font-size: 16px; font-weight: 700; color: #1c3a28;">${invoiceNumber}</p>
           <p style="margin: 0 0 4px; font-size: 13px; color: #4a6a52;">Usluga</p>
-          <p style="margin: 0; font-size: 15px; color: #1c3a28;">${planName} — Verdi Hrvatska</p>
+          <p style="margin: 0 0 16px; font-size: 15px; color: #1c3a28;">${planName} — Verdi Hrvatska</p>
+          <p style="margin: 0 0 4px; font-size: 13px; color: #4a6a52;">1. dostava</p>
+          <p style="margin: 0 0 ${delivery2Date ? "16px" : "0"}; font-size: 15px; font-weight: 600; color: #1c3a28;">${deliveryDate}</p>
+          ${delivery2Date ? `<p style="margin: 0 0 4px; font-size: 13px; color: #4a6a52;">2. dostava</p>
+          <p style="margin: 0; font-size: 15px; font-weight: 600; color: #1c3a28;">${delivery2Date}</p>` : ""}
         </div>
         <p style="font-size: 13px; color: #8ab09a;">Za pitanja pišite na lucija@verdihrvatska.com ili nazovite 099 821 6219.</p>
         <hr style="border: none; border-top: 1px solid #e0ede0; margin: 32px 0;" />
