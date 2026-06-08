@@ -17,9 +17,9 @@ function planFromPriceId(priceId: string): "taman" | "eko" | "super" {
   return "taman";
 }
 
-function nextDeliveryDate(): string {
+function deliveryDate(daysFromNow: number): string {
   const d = new Date();
-  d.setDate(d.getDate() + 14);
+  d.setDate(d.getDate() + daysFromNow);
   return d.toISOString().split("T")[0];
 }
 
@@ -69,16 +69,31 @@ export async function POST(req: NextRequest) {
       else subs.push(newSub);
       await saveSubscriptions(subs);
 
+      const delivery1Date = deliveryDate(1);
+      const delivery2Date = deliveryDate(15);
+
       await createDelivery({
         userId: user.id,
         subscriptionId: stripeSubId,
         plan,
         address: user.address,
         city: user.city,
-        scheduledDate: nextDeliveryDate(),
+        scheduledDate: delivery1Date,
         timeSlot: "09:00–13:00",
         status: "pending",
-        notes: "",
+        notes: "1ère livraison",
+      });
+
+      await createDelivery({
+        userId: user.id,
+        subscriptionId: stripeSubId,
+        plan,
+        address: user.address,
+        city: user.city,
+        scheduledDate: delivery2Date,
+        timeSlot: "09:00–13:00",
+        status: "pending",
+        notes: "2ème livraison",
       });
 
       createMinimaxInvoice({
@@ -88,7 +103,8 @@ export async function POST(req: NextRequest) {
         customerPostalCode: "10000",
         customerEmail: user.email,
         plan,
-        deliveryDate: nextDeliveryDate(),
+        deliveryDate: delivery1Date,
+        delivery2Date,
       }).catch(err => console.error("Minimax invoice error:", err.message));
 
       break;

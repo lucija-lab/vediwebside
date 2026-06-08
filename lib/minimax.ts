@@ -66,6 +66,7 @@ export async function createMinimaxInvoice(params: {
   customerEmail: string;
   plan: string;
   deliveryDate?: string;
+  delivery2Date?: string;
 }) {
   const token = await getToken();
   const orgId = await getOrgId();
@@ -98,7 +99,7 @@ export async function createMinimaxInvoice(params: {
     PricesOnInvoice: "N",
     RecurringInvoice: "N",
     Employee: { ID: 278563 },
-    Note: "Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!",
+    Note: `Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa! 1. dostava: ${params.deliveryDate ?? today}${params.delivery2Date ? ` | 2. dostava: ${params.delivery2Date}` : ""}`,
     IssuedInvoiceRows: rows.map((row, i) => ({
       RowNumber: i + 1,
       Item: { ID: row.itemId },
