@@ -97,19 +97,23 @@ export async function POST(req: NextRequest) {
         notes: "2ème livraison",
       });
 
-      createMinimaxInvoice({
-        customerName: `${user.firstName} ${user.lastName}`.trim() || user.email,
-        customerAddress: user.address ?? "",
-        customerCity: user.city ?? "",
-        customerPostalCode: "10000",
-        customerEmail: user.email,
-        plan,
-        deliveryDate: delivery1Date,
-        delivery2Date,
-      }).then(invoice => {
+      try {
+        const invoice = await createMinimaxInvoice({
+          customerName: `${user.firstName} ${user.lastName}`.trim() || user.email,
+          customerAddress: user.address ?? "",
+          customerCity: user.city ?? "",
+          customerPostalCode: "10000",
+          customerEmail: user.email,
+          plan,
+          deliveryDate: delivery1Date,
+          delivery2Date,
+        });
         const invoiceNumber = invoice?.InvoiceNumber ?? invoice?.DocumentNumber ?? invoice?.ID ?? "—";
-        return sendInvoiceEmail(user.email, user.firstName, plan, String(invoiceNumber), delivery1Date, delivery2Date);
-      }).catch(err => console.error("Minimax/email error:", err.message));
+        await sendInvoiceEmail(user.email, user.firstName, plan, String(invoiceNumber), delivery1Date, delivery2Date);
+        console.log("Minimax invoice created:", invoiceNumber, "— email sent to", user.email);
+      } catch (err: any) {
+        console.error("Minimax/email error:", err.message);
+      }
 
       break;
     }
