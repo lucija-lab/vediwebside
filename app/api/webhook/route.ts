@@ -40,9 +40,11 @@ export async function POST(req: NextRequest) {
       const session = event.data.object as Stripe.Checkout.Session;
       if (session.mode !== "subscription") break;
 
+      console.log("Webhook email from Stripe:", session.customer_email);
       const users = await getUsers();
+      console.log("Users in DB:", users.map(u => u.email));
       const user = users.find(u => u.email.toLowerCase() === (session.customer_email || "").toLowerCase());
-      if (!user) break;
+      if (!user) { console.log("User not found — aborting"); break; }
 
       const stripeSubId = session.subscription as string;
       const sub = await stripe.subscriptions.retrieve(stripeSubId);
