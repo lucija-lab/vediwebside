@@ -4,6 +4,7 @@ import { getUsers } from "@/lib/auth";
 import { getSubscriptions, saveSubscriptions } from "@/lib/subscriptions";
 import { createDelivery } from "@/lib/deliveries";
 import { createMinimaxInvoice } from "@/lib/minimax";
+import { sendInvoiceEmail } from "@/lib/email";
 import { randomBytes } from "crypto";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
@@ -105,7 +106,10 @@ export async function POST(req: NextRequest) {
         plan,
         deliveryDate: delivery1Date,
         delivery2Date,
-      }).catch(err => console.error("Minimax invoice error:", err.message));
+      }).then(invoice => {
+        const invoiceNumber = invoice?.InvoiceNumber ?? invoice?.DocumentNumber ?? invoice?.ID ?? "—";
+        return sendInvoiceEmail(user.email, user.firstName, plan, String(invoiceNumber), delivery1Date);
+      }).catch(err => console.error("Minimax/email error:", err.message));
 
       break;
     }
