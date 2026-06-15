@@ -87,7 +87,7 @@ export async function createMinimaxInvoice(params: {
     DocumentNumbering: { ID: 65500 },
     Customer: { ID: 4526294 },
     DateIssued: paymentDt,
-    DateTransaction: delivery1Dt,
+    DateTransaction: delivery2 ? delivery2 + "T00:00:00" : delivery1Dt,
     DateTransactionFrom: delivery1Dt,
     DateDue: paymentDt,
     AddresseeName: params.customerName,
