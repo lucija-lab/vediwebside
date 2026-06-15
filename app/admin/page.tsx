@@ -69,6 +69,12 @@ export default function AdminPage() {
     setDeliveries(d => d.map(x => x.id === id ? { ...x, ...updates } : x));
   };
 
+  const deleteDelivery = async (id: string) => {
+    if (!confirm(lang === "hr" ? "Obrisati ovu dostavu?" : "Delete this delivery?")) return;
+    await fetch("/api/deliveries", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+    setDeliveries(d => d.filter(x => x.id !== id));
+  };
+
   const createDelivery = async () => {
     if (!newDel.userId || !newDel.scheduledDate) return;
     setCreating(true);
@@ -275,6 +281,9 @@ export default function AdminPage() {
                         {lang === "hr" ? "Dodijeli" : "Assign"}
                       </button>
                     )}
+                    <button onClick={() => deleteDelivery(d.id)} title="Supprimer" style={{ background: "none", border: "none", cursor: "pointer", color: "#c0392b", padding: "0.3rem", borderRadius: 8, display: "flex", alignItems: "center" }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                    </button>
                   </div>
                 </div>
               ))}

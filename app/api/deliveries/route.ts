@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyToken, getUsers } from "@/lib/auth";
-import { getDeliveries, updateDelivery, createDelivery } from "@/lib/deliveries";
+import { getDeliveries, saveDeliveries, updateDelivery, createDelivery } from "@/lib/deliveries";
 import { createMinimaxInvoice } from "@/lib/minimax";
 import { sendInvoiceEmail } from "@/lib/email";
 import { randomBytes } from "crypto";
@@ -56,6 +56,23 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const delivery = await createDelivery({ ...body, id: randomBytes(12).toString("hex") });
   return NextResponse.json({ delivery });
+}
+
+export async function DELETE(req: NextRequest) {
+  const token = req.cookies.get("verdi_session")?.value;
+  if (!token) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const userId = verifyToken(token);
+  if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const users = await getUsers();
+  const user = users.find(u => u.id === userId);
+  if (!user || user.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+
+  const { id } = await req.json();
+  if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
+
+  const all = await getDeliveries();
+  await saveDeliveries(all.filter(d => d.id !== id));
+  return NextResponse.json({ ok: true });
 }
 
 export async function PATCH(req: NextRequest) {
