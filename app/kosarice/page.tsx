@@ -64,7 +64,7 @@ const content = {
       period: "mo.",
       desc: "Ideal for 1–2 people. Freshly harvested seasonal vegetables directly from verified family farms.",
       cta: "Order Taman basket",
-      features: ["min. 7 kg fresh produce", "6+ different varieties", "Delivery every 2 weeks", "All year, 12 months", "Home or office address", "Corporate co-funding accepted", "Limited number of subscriptions"],
+      features: ["min. 7 kg fresh produce", "6+ different varieties", "Delivery every 2 weeks", "All year, 12 months", "Home or office address", "Corporate co-funding accepted"],
     },
     eko: {
       name: "Eko Basket",
@@ -72,7 +72,7 @@ const content = {
       period: "mo.",
       desc: "Certified organic season. Vegetables from certified eco farms — clean, natural, straight from the field.",
       cta: "Order Eko basket",
-      features: ["Certified organic produce", "Seasonal variety selection", "Delivery every 2 weeks", "All year, 12 months", "Home or office address", "Corporate co-funding accepted", "Limited number of subscriptions"],
+      features: ["Certified organic produce", "Seasonal variety selection", "Delivery every 2 weeks", "All year, 12 months", "Home or office address", "Corporate co-funding accepted"],
     },
     super: {
       name: "Super Basket",
@@ -80,7 +80,7 @@ const content = {
       period: "mo.",
       desc: "For larger families or true fresh produce lovers. More varieties, bigger quantities, same high quality.",
       cta: "Order Super basket",
-      features: ["min. 10.5 kg fresh produce", "7+ different varieties", "Delivery every 2 weeks", "All year, 12 months", "Home or office address", "Corporate co-funding accepted", "Limited number of subscriptions"],
+      features: ["min. 10.5 kg fresh produce", "7+ different varieties", "Delivery every 2 weeks", "All year, 12 months", "Home or office address", "Corporate co-funding accepted"],
     },
     compare: "Compare baskets",
     compLabel: ["", "Taman", "Eko", "Super"],
