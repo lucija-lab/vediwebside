@@ -45,6 +45,9 @@ export default function Header() {
         </nav>
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+          <a href="https://www.instagram.com/verdihrvatska?igsh=bTJpaHFhMWc4ejF3&utm_source=qr" target="_blank" rel="noopener noreferrer" style={{ color: "#3a7a52", display: "flex", alignItems: "center" }} className="hdr-desktop">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
           <button onClick={() => setLang(lang === "hr" ? "en" : "hr")} style={langBtnStyle}>{tx.langBtn}</button>
 
           {user ? (

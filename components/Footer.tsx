@@ -81,6 +81,10 @@ export default function Footer() {
             <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
               <a href="mailto:lucija@verdihrvatska.com" style={footLink}>lucija@verdihrvatska.com</a>
               <a href="tel:0998216219" style={footLink}>099 821 6219</a>
+              <a href="https://www.instagram.com/verdihrvatska?igsh=bTJpaHFhMWc4ejF3&utm_source=qr" target="_blank" rel="noopener noreferrer" style={{ ...footLink, display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                @verdihrvatska
+              </a>
               <p style={{ color: "#8ab09a", fontSize: 13, marginTop: "0.4rem" }}>{tx.company}</p>
               <p style={{ color: "#8ab09a", fontSize: 13 }}>OIB: 23568488873</p>
               <p style={{ color: "#8ab09a", fontSize: 13 }}>Susedgradska ulica 3, 10000 Zagreb</p>
