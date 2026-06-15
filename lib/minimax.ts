@@ -70,8 +70,11 @@ export async function createMinimaxInvoice(params: {
 }) {
   const token = await getToken();
   const orgId = await getOrgId();
-  const today = params.deliveryDate ?? new Date().toISOString().split("T")[0];
-  const dt = today + "T00:00:00";
+  const paymentDate = new Date().toISOString().split("T")[0];
+  const delivery1 = params.deliveryDate ?? paymentDate;
+  const delivery2 = params.delivery2Date;
+  const paymentDt = paymentDate + "T00:00:00";
+  const delivery1Dt = delivery1 + "T00:00:00";
   const rows = PLAN_ROWS[params.plan] ?? PLAN_ROWS.taman;
 
   const totalAmount = rows.reduce((sum, row) => {
@@ -83,10 +86,10 @@ export async function createMinimaxInvoice(params: {
     InvoiceType: "R",
     DocumentNumbering: { ID: 65500 },
     Customer: { ID: 4526294 },
-    DateIssued: dt,
-    DateTransaction: dt,
-    DateTransactionFrom: dt,
-    DateDue: dt,
+    DateIssued: paymentDt,
+    DateTransaction: delivery1Dt,
+    DateTransactionFrom: delivery1Dt,
+    DateDue: paymentDt,
     AddresseeName: params.customerName,
     AddresseeAddress: params.customerAddress,
     AddresseePostalCode: params.customerPostalCode || "10000",
@@ -99,7 +102,7 @@ export async function createMinimaxInvoice(params: {
     PricesOnInvoice: "N",
     RecurringInvoice: "N",
     Employee: { ID: 278563 },
-    Note: `Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa! 1. dostava: ${params.deliveryDate ?? today}${params.delivery2Date ? ` | 2. dostava: ${params.delivery2Date}` : ""}`,
+    Note: `1. dostava: ${delivery1}${delivery2 ? ` | 2. dostava: ${delivery2}` : ""} — Hvala što svakom svojom kupnjom podupirete lokalne OPG-ove putem Verdi webshopa!`,
     IssuedInvoiceRows: rows.map((row, i) => ({
       RowNumber: i + 1,
       Item: { ID: row.itemId },
