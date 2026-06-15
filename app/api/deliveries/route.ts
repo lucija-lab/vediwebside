@@ -67,7 +67,7 @@ export async function DELETE(req: NextRequest) {
   const user = users.find(u => u.id === userId);
   if (!user || user.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
-  const { id } = await req.json();
+  const id = req.nextUrl.searchParams.get("id");
   if (!id) return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
   const all = await getDeliveries();

@@ -71,7 +71,7 @@ export default function AdminPage() {
 
   const deleteDelivery = async (id: string) => {
     if (!confirm(lang === "hr" ? "Obrisati ovu dostavu?" : "Delete this delivery?")) return;
-    await fetch("/api/deliveries", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+    await fetch(`/api/deliveries?id=${id}`, { method: "DELETE" });
     setDeliveries(d => d.filter(x => x.id !== id));
   };
 
