@@ -149,7 +149,7 @@ export default function ComptePage() {
   const upcoming = deliveries.filter(d => d.status === "pending" || d.status === "assigned");
   const past = deliveries.filter(d => ["delivered", "skipped", "failed"].includes(d.status));
   const planLabel = (p: string) => ({ taman: tx.taman, eko: lang === "hr" ? "Košara Eko" : "Eko Basket", super: tx.super }[p] || p);
-  const planDesc = (p: string) => ({ taman: tx.tamanDesc, eko: lang === "hr" ? "~8 kg / košarica · Eko certificirano · dva puta mjesečno" : "~8 kg / basket · Eco certified · twice a month", super: tx.superDesc }[p] || "");
+  const planDesc = (p: string) => ({ taman: tx.tamanDesc, eko: lang === "hr" ? "5,5–7,5 kg / košarica · Eko certificirano · dva puta mjesečno" : "5.5–7.5 kg / basket · Eco certified · twice a month", super: tx.superDesc }[p] || "");
   const planPrice = (p: string) => ({ taman: "62€", eko: "66,50€", super: "71€" }[p] || "");
 
   const statusBadge = (s: string) => {

@@ -38,7 +38,7 @@ const content = {
     compare: "Usporedi košarice",
     compLabel: ["", "Taman", "Eko", "Super"],
     compRows: [
-      ["Težina po dostavi", "min. 7 kg", "~8 kg", "min. 10,5 kg"],
+      ["Težina po dostavi", "min. 7 kg", "5,5–7,5 kg", "min. 10,5 kg"],
       ["Ekološki certifikat", "—", "✓", "—"],
       ["Broj kultura", "6+", "6+", "7+"],
       ["Dostava", "dva puta mjesečno", "dva puta mjesečno", "dva puta mjesečno"],
@@ -85,7 +85,7 @@ const content = {
     compare: "Compare baskets",
     compLabel: ["", "Taman", "Eko", "Super"],
     compRows: [
-      ["Weight per delivery", "min. 7 kg", "~8 kg", "min. 10.5 kg"],
+      ["Weight per delivery", "min. 7 kg", "5.5–7.5 kg", "min. 10.5 kg"],
       ["Organic certified", "—", "✓", "—"],
       ["Varieties", "6+", "6+", "7+"],
       ["Delivery", "twice a month", "twice a month", "twice a month"],
