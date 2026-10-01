@@ -9,7 +9,7 @@ const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfa
 
 export const metadata: Metadata = {
   title: "Verdi – Svježe košarice od lokalnih OPG-ova",
-  description: "Verdi dostavlja košarice pune svježeg, sezonskog povrća direktno od OPG-ova – svaka 2 tjedna, cijele godine.",
+  description: "Verdi dostavlja košarice pune svježeg, sezonskog povrća direktno od OPG-ova – dva puta mjesečno, cijele godine.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

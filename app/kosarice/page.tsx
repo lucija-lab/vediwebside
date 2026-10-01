@@ -9,7 +9,7 @@ import { useLang } from "@/context/LanguageContext";
 const content = {
   hr: {
     title: "Odaberite svoju košaricu",
-    sub: "Svježe, sezonsko povrće od lokalnih OPG-ova — dostava svaka 2 tjedna, cijele godine.",
+    sub: "Svježe, sezonsko povrće od lokalnih OPG-ova — dostava dva puta mjesečno, cijele godine.",
     popular: "Najpopularnije",
     taman: {
       name: "Košara Taman",
@@ -17,7 +17,7 @@ const content = {
       period: "mj.",
       desc: "Idealno za 1–2 osobe. Svježe ubrano sezonsko povrće direktno od provjerenih obiteljskih farmi.",
       cta: "Naruči Taman košaricu",
-      features: ["min. 7 kg svježeg povrća", "6+ različitih kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme"],
+      features: ["min. 7 kg svježeg povrća", "6+ različitih kultura", "Dostava dva puta mjesečno", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme"],
     },
     eko: {
       name: "Košara Eko",
@@ -25,7 +25,7 @@ const content = {
       period: "mj.",
       desc: "Ekološki certificirano povrće s OPG Novak. Svježe, prirodno, direktno s polja.",
       cta: "Naruči Eko košaricu",
-      features: ["Eko certificirano povrće", "Sezonski odabir kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme"],
+      features: ["Eko certificirano povrće", "Sezonski odabir kultura", "Dostava dva puta mjesečno", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme"],
     },
     super: {
       name: "Košara Super",
@@ -33,7 +33,7 @@ const content = {
       period: "mj.",
       desc: "Za veće obitelji ili prave ljubitelje svježeg povrća. Više kultura, veće količine, ista visoka kvaliteta.",
       cta: "Naruči Super košaricu",
-      features: ["min. 10,5 kg svježeg povrća", "7+ različitih kultura", "Dostava svaka 2 tjedna", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme"],
+      features: ["min. 10,5 kg svježeg povrća", "7+ različitih kultura", "Dostava dva puta mjesečno", "Cijele godine, 12 mjeseci", "Kućna adresa ili adresa tvrtke", "Sufinanciranje od strane firme"],
     },
     compare: "Usporedi košarice",
     compLabel: ["", "Taman", "Eko", "Super"],
@@ -41,12 +41,12 @@ const content = {
       ["Težina po dostavi", "min. 7 kg", "~8 kg", "min. 10,5 kg"],
       ["Ekološki certifikat", "—", "✓", "—"],
       ["Broj kultura", "6+", "6+", "7+"],
-      ["Dostava", "svaka 2 tjedna", "svaka 2 tjedna", "svaka 2 tjedna"],
+      ["Dostava", "dva puta mjesečno", "dva puta mjesečno", "dva puta mjesečno"],
       ["Cijena/mj.", "62€", "66,50€", "71€"],
     ],
     faqTitle: "Često postavljana pitanja",
     faqs: [
-      { q: "Kako funkcionira dostava?", a: "Dostavljamo svaka 2 tjedna na adresu po vašem izboru – kućna adresa ili adresa tvrtke." },
+      { q: "Kako funkcionira dostava?", a: "Dostavljamo dva puta mjesečno na adresu po vašem izboru – kućna adresa ili adresa tvrtke." },
       { q: "Što ako sam odsutan?", a: "Možete promijeniti adresu ili preskočiti dostavu uz najavu 3 dana unaprijed." },
       { q: "Može li tvrtka platiti pretplatu?", a: "Da! Iznos pretplate prihvaćamo kao employee benefit." },
       { q: "Mogu li otkazati pretplatu?", a: "Da, u bilo kojem trenutku bez naknade, uz 14 dana otkaznog roka." },
@@ -56,7 +56,7 @@ const content = {
   },
   en: {
     title: "Choose your basket",
-    sub: "Fresh, seasonal produce from local family farms — delivered every 2 weeks, all year round.",
+    sub: "Fresh, seasonal produce from local family farms — delivered twice a month, all year round.",
     popular: "Most popular",
     taman: {
       name: "Taman Basket",
@@ -64,7 +64,7 @@ const content = {
       period: "mo.",
       desc: "Ideal for 1–2 people. Freshly harvested seasonal vegetables directly from verified family farms.",
       cta: "Order Taman basket",
-      features: ["min. 7 kg fresh produce", "6+ different varieties", "Delivery every 2 weeks", "All year, 12 months", "Home or office address", "Corporate co-funding accepted"],
+      features: ["min. 7 kg fresh produce", "6+ different varieties", "Delivery twice a month", "All year, 12 months", "Home or office address", "Corporate co-funding accepted"],
     },
     eko: {
       name: "Eko Basket",
@@ -72,7 +72,7 @@ const content = {
       period: "mo.",
       desc: "Certified organic season. Vegetables from certified eco farms — clean, natural, straight from the field.",
       cta: "Order Eko basket",
-      features: ["Certified organic produce", "Seasonal variety selection", "Delivery every 2 weeks", "All year, 12 months", "Home or office address", "Corporate co-funding accepted"],
+      features: ["Certified organic produce", "Seasonal variety selection", "Delivery twice a month", "All year, 12 months", "Home or office address", "Corporate co-funding accepted"],
     },
     super: {
       name: "Super Basket",
@@ -80,7 +80,7 @@ const content = {
       period: "mo.",
       desc: "For larger families or true fresh produce lovers. More varieties, bigger quantities, same high quality.",
       cta: "Order Super basket",
-      features: ["min. 10.5 kg fresh produce", "7+ different varieties", "Delivery every 2 weeks", "All year, 12 months", "Home or office address", "Corporate co-funding accepted"],
+      features: ["min. 10.5 kg fresh produce", "7+ different varieties", "Delivery twice a month", "All year, 12 months", "Home or office address", "Corporate co-funding accepted"],
     },
     compare: "Compare baskets",
     compLabel: ["", "Taman", "Eko", "Super"],
@@ -88,12 +88,12 @@ const content = {
       ["Weight per delivery", "min. 7 kg", "~8 kg", "min. 10.5 kg"],
       ["Organic certified", "—", "✓", "—"],
       ["Varieties", "6+", "6+", "7+"],
-      ["Delivery", "every 2 weeks", "every 2 weeks", "every 2 weeks"],
+      ["Delivery", "twice a month", "twice a month", "twice a month"],
       ["Price/mo.", "€62", "€66.50", "€71"],
     ],
     faqTitle: "Frequently asked questions",
     faqs: [
-      { q: "How does delivery work?", a: "We deliver every 2 weeks to the address of your choice – home or office." },
+      { q: "How does delivery work?", a: "We deliver twice a month to the address of your choice – home or office." },
       { q: "What if I'm away?", a: "You can change the address or skip a delivery with 3 days notice." },
       { q: "Can my company pay?", a: "Yes! We accept the subscription as an employee benefit." },
       { q: "Can I cancel?", a: "Yes, at any time with no fee, with a 14-day notice period." },

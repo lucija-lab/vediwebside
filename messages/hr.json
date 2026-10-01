@@ -9,7 +9,7 @@
   "hero": {
     "badge": "Svježe. Lokalno. Sezonski.",
     "title": "Zdrave namirnice direktno na Vaša vrata",
-    "subtitle": "Verdi dostavlja košarice pune svježeg povrća od OPG-ova iz Vaše blizine — svaka 2 tjedna, cijele godine.",
+    "subtitle": "Verdi dostavlja košarice pune svježeg povrća od OPG-ova iz Vaše blizine — dva puta mjesečno, cijele godine.",
     "cta": "Odaberite košaricu",
     "cta2": "Saznajte više"
   },
@@ -34,7 +34,7 @@
       {
         "icon": "📅",
         "title": "Cijele godine",
-        "desc": "Dostave svaka 2 tjedna, 12 mjeseci, sa sezonskim rotacijama"
+        "desc": "Dostave dva puta mjesečno, 12 mjeseci, sa sezonskim rotacijama"
       }
     ]
   },
@@ -72,7 +72,7 @@
       "cta": "Pretplatite se"
     },
     "vat": "Cijene uključuju PDV",
-    "delivery": "Dostava svaka 2 tjedna"
+    "delivery": "Dostava dva puta mjesečno"
   },
   "seasons": {
     "title": "Sezonski kalendar",
@@ -101,7 +101,7 @@
   "about": {
     "title": "O nama",
     "subtitle": "Verdi je nastao iz jednostavne ideje: spojiti ljude s kvalitetnom, lokalnom hranom",
-    "story": "Mi u Verdiju razumijemo da uz posao i sve obaveze, jednostavno ne stižete u kupovinu, a kamo li na tržnicu. Zato mi dolazimo k Vama! Verdi Vam dostavlja košarice pune zdravog povrća, direktno od OPG-ova iz Vaše blizine — svaka 2 tjedna, cijele godine!",
+    "story": "Mi u Verdiju razumijemo da uz posao i sve obaveze, jednostavno ne stižete u kupovinu, a kamo li na tržnicu. Zato mi dolazimo k Vama! Verdi Vam dostavlja košarice pune zdravog povrća, direktno od OPG-ova iz Vaše blizine — dva puta mjesečno, cijele godine!",
     "mission": "Naša misija",
     "missionText": "Želimo da Vam jedina briga bude... što ćete kuhati sa svim prekrasnim, svježim, raznolikim namirnicama koje Vam stignu na vrata. Ostalo prepustite nama!",
     "partners": "Naši OPG partneri",

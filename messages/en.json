@@ -9,7 +9,7 @@
   "hero": {
     "badge": "Fresh. Local. Seasonal.",
     "title": "Healthy produce delivered straight to your door",
-    "subtitle": "Verdi delivers baskets full of fresh vegetables from local family farms near you — every 2 weeks, all year round.",
+    "subtitle": "Verdi delivers baskets full of fresh vegetables from local family farms near you — twice a month, all year round.",
     "cta": "Choose your basket",
     "cta2": "Learn more"
   },
@@ -34,7 +34,7 @@
       {
         "icon": "📅",
         "title": "All year round",
-        "desc": "Deliveries every 2 weeks, 12 months, with seasonal rotations"
+        "desc": "Deliveries twice a month, 12 months, with seasonal rotations"
       }
     ]
   },
@@ -72,7 +72,7 @@
       "cta": "Subscribe"
     },
     "vat": "Prices include VAT",
-    "delivery": "Delivery every 2 weeks"
+    "delivery": "Delivery twice a month"
   },
   "seasons": {
     "title": "Seasonal calendar",
@@ -101,7 +101,7 @@
   "about": {
     "title": "About us",
     "subtitle": "Verdi was born from a simple idea: connecting people with quality, local food",
-    "story": "We at Verdi understand that with work and all your obligations, you simply don't have time to go shopping, let alone to the farmers' market. That's why we come to you! Verdi delivers baskets full of healthy vegetables, directly from family farms near you — every 2 weeks, all year round!",
+    "story": "We at Verdi understand that with work and all your obligations, you simply don't have time to go shopping, let alone to the farmers' market. That's why we come to you! Verdi delivers baskets full of healthy vegetables, directly from family farms near you — twice a month, all year round!",
     "mission": "Our mission",
     "missionText": "We want your only worry to be... what to cook with all the wonderful, fresh, diverse ingredients that arrive at your door. Leave the rest to us!",
     "partners": "Our farm partners",

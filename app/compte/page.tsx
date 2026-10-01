@@ -12,13 +12,13 @@ const t = {
     loading: "Učitavanje vašeg računa...",
     tabs: ["Pretplata", "Dostave", "Profil"],
     noSub: "Još niste pretplatnik",
-    noSubDesc: "Odaberite košaricu i počnite primati svježe sezonsko povrće svaka 2 tjedna.",
+    noSubDesc: "Odaberite košaricu i počnite primati svježe sezonsko povrće dva puta mjesečno.",
     choosePlan: "Pogledaj košarice",
     plan: "Vaš plan", nextBilling: "Sljedeća naplata", since: "Pretplatnik od",
     active: "Aktivan", canceled: "Otkazan", past_due: "Kašnjenje plaćanja", paused: "Pauzirano",
     taman: "Košara Taman", super: "Košara Super",
-    tamanDesc: "min. 7 kg · 6+ kultura · svaka 2 tjedna",
-    superDesc: "min. 10,5 kg · 7+ kultura · svaka 2 tjedna",
+    tamanDesc: "min. 7 kg · 6+ kultura · dva puta mjesečno",
+    superDesc: "min. 10,5 kg · 7+ kultura · dva puta mjesečno",
     manageBilling: "Upravljanje plaćanjem (Stripe)",
     noDeliveries: "Nema planiranih dostava",
     upcoming: "Nadolazeće dostave", past: "Prošle dostave",
@@ -37,13 +37,13 @@ const t = {
     loading: "Loading your account...",
     tabs: ["Subscription", "Deliveries", "Profile"],
     noSub: "No active subscription",
-    noSubDesc: "Choose a basket and start receiving fresh seasonal vegetables every 2 weeks.",
+    noSubDesc: "Choose a basket and start receiving fresh seasonal vegetables twice a month.",
     choosePlan: "View baskets",
     plan: "Your plan", nextBilling: "Next billing", since: "Member since",
     active: "Active", canceled: "Canceled", past_due: "Payment overdue", paused: "Paused",
     taman: "Taman Basket", super: "Super Basket",
-    tamanDesc: "min. 7 kg · 6+ varieties · every 2 weeks",
-    superDesc: "min. 10.5 kg · 7+ varieties · every 2 weeks",
+    tamanDesc: "min. 7 kg · 6+ varieties · twice a month",
+    superDesc: "min. 10.5 kg · 7+ varieties · twice a month",
     manageBilling: "Manage billing (Stripe)",
     noDeliveries: "No scheduled deliveries",
     upcoming: "Upcoming deliveries", past: "Past deliveries",
@@ -149,7 +149,7 @@ export default function ComptePage() {
   const upcoming = deliveries.filter(d => d.status === "pending" || d.status === "assigned");
   const past = deliveries.filter(d => ["delivered", "skipped", "failed"].includes(d.status));
   const planLabel = (p: string) => ({ taman: tx.taman, eko: lang === "hr" ? "Košara Eko" : "Eko Basket", super: tx.super }[p] || p);
-  const planDesc = (p: string) => ({ taman: tx.tamanDesc, eko: lang === "hr" ? "~8 kg · Eko certificirano · svaka 2 tjedna" : "~8 kg · Eco certified · every 2 weeks", super: tx.superDesc }[p] || "");
+  const planDesc = (p: string) => ({ taman: tx.tamanDesc, eko: lang === "hr" ? "~8 kg · Eko certificirano · dva puta mjesečno" : "~8 kg · Eco certified · twice a month", super: tx.superDesc }[p] || "");
   const planPrice = (p: string) => ({ taman: "62€", eko: "66,50€", super: "71€" }[p] || "");
 
   const statusBadge = (s: string) => {

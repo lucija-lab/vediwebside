@@ -6,7 +6,7 @@ import { useLang } from "@/context/LanguageContext";
 
 const t = {
   hr: {
-    tagline: "Svježe košarice direktno od naših OPG-ova, svaka 2 tjedna, cijele godine.",
+    tagline: "Svježe košarice direktno od naših OPG-ova, dva puta mjesečno, cijele godine.",
     nav: "Stranice",
     links: [
       { label: "Košarice", href: "/kosarice" },
@@ -24,7 +24,7 @@ const t = {
     company: "LMB 1759 Export d.o.o.",
   },
   en: {
-    tagline: "Fresh baskets directly from local farms, every 2 weeks, all year round.",
+    tagline: "Fresh baskets directly from local farms, twice a month, all year round.",
     nav: "Pages",
     links: [
       { label: "Baskets", href: "/kosarice" },

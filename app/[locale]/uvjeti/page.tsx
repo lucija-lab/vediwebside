@@ -29,7 +29,7 @@ export default function UvjetiPage() {
           <p>Sve cijene predstavljaju maloprodajne cijene i uključuju PDV. Kupnja je moguća isključivo za područje Republike Hrvatske.</p>
 
           <h3>Dostava</h3>
-          <p>Dostava se vrši svaka 2 tjedna, na adresu koju kupac navede prilikom narudžbe (kućna adresa ili adresa tvrtke). Dostava je uključena u cijenu pretplate.</p>
+          <p>Dostava se vrši dva puta mjesečno, na adresu koju kupac navede prilikom narudžbe (kućna adresa ili adresa tvrtke). Dostava je uključena u cijenu pretplate.</p>
 
           <h3>Pravo na odustanak</h3>
           <p>Kupac ima pravo odustati od pretplate u bilo kojem trenutku bez naplate penala. Odustanak se vrši putem e-maila: lucija@verdihrvatska.com.</p>

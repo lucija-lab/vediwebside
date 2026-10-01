@@ -43,7 +43,7 @@ export async function sendWelcomeEmail(email: string, firstName: string) {
           Sada možete odabrati svoju košaricu i naručiti svježe povrće direktno od naših OPG-ova.
         </p>
         <div style="background: #f0f7f0; border-radius: 16px; padding: 24px; margin-bottom: 24px;">
-          <p style="margin: 0 0 8px; font-size: 14px; color: #4a6a52;">✓ &nbsp;Svježe sezonsko povrće svaka 2 tjedna</p>
+          <p style="margin: 0 0 8px; font-size: 14px; color: #4a6a52;">✓ &nbsp;Svježe sezonsko povrće dva puta mjesečno</p>
           <p style="margin: 0 0 8px; font-size: 14px; color: #4a6a52;">✓ &nbsp;Direktno od lokalnih OPG-ova</p>
           <p style="margin: 0; font-size: 14px; color: #4a6a52;">✓ &nbsp;Dostava na kućnu ili poslovnu adresu</p>
         </div>
