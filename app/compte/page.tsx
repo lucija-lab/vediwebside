@@ -17,8 +17,8 @@ const t = {
     plan: "Vaš plan", nextBilling: "Sljedeća naplata", since: "Pretplatnik od",
     active: "Aktivan", canceled: "Otkazan", past_due: "Kašnjenje plaćanja", paused: "Pauzirano",
     taman: "Košara Taman", super: "Košara Super",
-    tamanDesc: "min. 7 kg · 6+ kultura · dva puta mjesečno",
-    superDesc: "min. 10,5 kg · 7+ kultura · dva puta mjesečno",
+    tamanDesc: "min. 7 kg / košarica · 6+ kultura · dva puta mjesečno",
+    superDesc: "min. 10,5 kg / košarica · 7+ kultura · dva puta mjesečno",
     manageBilling: "Upravljanje plaćanjem (Stripe)",
     noDeliveries: "Nema planiranih dostava",
     upcoming: "Nadolazeće dostave", past: "Prošle dostave",
@@ -42,8 +42,8 @@ const t = {
     plan: "Your plan", nextBilling: "Next billing", since: "Member since",
     active: "Active", canceled: "Canceled", past_due: "Payment overdue", paused: "Paused",
     taman: "Taman Basket", super: "Super Basket",
-    tamanDesc: "min. 7 kg · 6+ varieties · twice a month",
-    superDesc: "min. 10.5 kg · 7+ varieties · twice a month",
+    tamanDesc: "min. 7 kg / basket · 6+ varieties · twice a month",
+    superDesc: "min. 10.5 kg / basket · 7+ varieties · twice a month",
     manageBilling: "Manage billing (Stripe)",
     noDeliveries: "No scheduled deliveries",
     upcoming: "Upcoming deliveries", past: "Past deliveries",
@@ -149,7 +149,7 @@ export default function ComptePage() {
   const upcoming = deliveries.filter(d => d.status === "pending" || d.status === "assigned");
   const past = deliveries.filter(d => ["delivered", "skipped", "failed"].includes(d.status));
   const planLabel = (p: string) => ({ taman: tx.taman, eko: lang === "hr" ? "Košara Eko" : "Eko Basket", super: tx.super }[p] || p);
-  const planDesc = (p: string) => ({ taman: tx.tamanDesc, eko: lang === "hr" ? "~8 kg · Eko certificirano · dva puta mjesečno" : "~8 kg · Eco certified · twice a month", super: tx.superDesc }[p] || "");
+  const planDesc = (p: string) => ({ taman: tx.tamanDesc, eko: lang === "hr" ? "~8 kg / košarica · Eko certificirano · dva puta mjesečno" : "~8 kg / basket · Eco certified · twice a month", super: tx.superDesc }[p] || "");
   const planPrice = (p: string) => ({ taman: "62€", eko: "66,50€", super: "71€" }[p] || "");
 
   const statusBadge = (s: string) => {
